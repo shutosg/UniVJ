@@ -22,10 +22,10 @@ public class SubSceneCamera : MonoBehaviour
         _sceneCamera.targetTexture = targetTexture;
 
         // レイヤーを設定
-        _sceneCamera.cullingMask = layer.ToInt();
+        _sceneCamera.cullingMask = layer.ToFlagInt();
         foreach(var l in _sceneLights)
         {
-            l.cullingMask = layer.ToInt();
+            l.cullingMask = layer.ToFlagInt();
         }
     }
 

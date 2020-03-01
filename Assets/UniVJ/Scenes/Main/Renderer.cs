@@ -27,9 +27,9 @@ public class Renderer
         view.SetBlendingSlider(0, 1);
     }
 
-    public void RegistorySubScene(SubSceneCamera camera, int index)
+    public void RegistorySubScene(SubSceneCamera camera, Layers layer)
     {
-        camera.Setup(_subSceneRenderTextures[index], (Layers)(11 + index));
+        camera.Setup(_subSceneRenderTextures[(int)layer - (int)Layers.Scene1], layer);
     }
 
     public void SetFadeValue(int index, float fadeValue)

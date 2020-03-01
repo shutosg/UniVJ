@@ -11,5 +11,5 @@
 
 public static class LayersExtension
 {
-    public static int ToInt(this Layers self) => 1 << (int)self;
+    public static int ToFlagInt(this Layers self) => 1 << (int)self;
 }

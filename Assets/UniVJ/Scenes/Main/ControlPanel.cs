@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,14 +19,16 @@ public class ControlPanel : MonoBehaviour
     {
         _mainRenderer = mainRenderer;
         _mainRenderer.InitializeView(_rendererView);
-        _scene1.OnClickAsObservable().Subscribe(_ => loadScene("Test1", 0));
-        _scene2.OnClickAsObservable().Subscribe(_ => loadScene("Test2", 1));
+        _scene1.OnClickAsObservable().Subscribe(_ => loadScene("Test1", Layers.Scene1));
+        _scene2.OnClickAsObservable().Subscribe(_ => loadScene("Test2", Layers.Scene2));
     }
 
-    private async void loadScene(string sceneName, int layerIndex)
+    private async void loadScene(string sceneName, Layers layer)
     {
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        var subSceneCamera = SceneManager.GetSceneByName(sceneName).GetRootGameObjects()[0].GetComponentInChildren<SubSceneCamera>();
-        _mainRenderer.RegistorySubScene(subSceneCamera, layerIndex);
+        var rootObjects = SceneManager.GetSceneByName(sceneName).GetRootGameObjects();
+        rootObjects.ForEach(go => go.SetLayerRecursively((int)layer));
+        var subSceneCamera = rootObjects[0].GetComponentInChildren<SubSceneCamera>();
+        _mainRenderer.RegistorySubScene(subSceneCamera, layer);
     }
 }
