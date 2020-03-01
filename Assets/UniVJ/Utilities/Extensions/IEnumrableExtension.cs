@@ -34,4 +34,10 @@ public static class IEnumerableExtension
         for (var i = 0; i < self.Count(); i++)
             action?.Invoke(self[i], i);
     }
+
+    public static void ForEach<T>(this T[] self, Action<T> action)
+    {
+        for (var i = 0; i < self.Length; i++)
+            action?.Invoke(self[i]);
+    }
 }
