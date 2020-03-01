@@ -1051,5 +1051,35 @@ PrefabInstance:
       propertyPath: m_ScreenMatchMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 389408658552173622, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: cellInterval
+      value: 0.028571429
+      objectReference: {fileID: 0}
+    - target: {fileID: 389408658552173622, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: scrollOffset
+      value: 0.028571429
+      objectReference: {fileID: 0}
+    - target: {fileID: 3337752660162696623, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3337752660162696623, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7548900634236942611, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7548900634236942611, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 627fd3cdbfe1d4ffd80415372e9f848d, type: 3}

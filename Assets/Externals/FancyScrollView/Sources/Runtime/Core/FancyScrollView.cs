@@ -46,7 +46,7 @@ namespace FancyScrollView
         /// </summary>
         [SerializeField] protected Transform cellContainer = default;
 
-        readonly IList<FancyCell<TItemData, TContext>> pool = new List<FancyCell<TItemData, TContext>>();
+        protected readonly IList<FancyCell<TItemData, TContext>> pool = new List<FancyCell<TItemData, TContext>>();
 
         /// <summary>
         /// 初期化済みかどうか.
