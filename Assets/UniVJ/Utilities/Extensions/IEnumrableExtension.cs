@@ -17,4 +17,21 @@ public static class IEnumerableExtension
     {
         Debug.Log($"{prefix}[{string.Join(", ", self.Select(obj => selector != null ? selector(obj) : obj.ToString()))}]{suffix}");
     }
+
+    public static void Zip<First, Second>(this IReadOnlyList<First> self, IReadOnlyList<Second> second, Action<First, Second, int> action)
+    {
+        if (second == null) throw new ArgumentNullException();
+        if (self.Count() != second.Count()) throw new ArgumentException();
+        for (var i = 0; i < self.Count(); i++)
+            action?.Invoke(self[i], second[i], i);
+    }
+
+    public static void Zip<First, Second>(this IReadOnlyList<First> self, IReadOnlyList<Second> second, Action<First, Second> action)
+        => Zip(self, second, (f, s, _) => action(f, s));
+
+    public static void ForEach<T>(this IReadOnlyList<T> self, Action<T, int> action)
+    {
+        for (var i = 0; i < self.Count(); i++)
+            action?.Invoke(self[i], i);
+    }
 }
