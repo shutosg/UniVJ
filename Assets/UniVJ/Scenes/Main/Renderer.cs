@@ -1,25 +1,30 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UniRx;
 
-public class Renderer : MonoBehaviour
+public class Renderer
 {
-    [SerializeField] private RawImage _mainImage;
     private List<RenderTexture> _subSceneRenderTextures = new List<RenderTexture>();
-    [SerializeField] private Shader _mixShader;
     private Material _mixMaterial;
 
-    public void Initialize()
+    public void Initialize(Shader mixShader)
     {
-        _mixMaterial = new Material(_mixShader);
-        _mainImage.material = _mixMaterial;
+        _mixMaterial = new Material(mixShader);
         for (var i = 0; i < 4; i++)
         {
             var rt = new RenderTexture(1920, 1080, 0);
             _subSceneRenderTextures.Add(rt);
             _mixMaterial.SetTexture($"_Tex{i + 1}", rt);
         }
+    }
+
+    public void InitializeView(RendererView view)
+    {
+        view.Initialize(_mixMaterial, _subSceneRenderTextures);
+        view.OnChangeBlendingValues.ForEach((onChangeValue, i) => onChangeValue.Subscribe(v => SetFadeValue(i, v)));
+        view.SetBlendingSlider(0, 1);
     }
 
     public void RegistorySubScene(SubSceneCamera camera, int index)

@@ -8,8 +8,8 @@ using UniRx.Async;
 
 public class EntryPoint : MonoBehaviour
 {
-    [SerializeField] private ControlPanel controlPanel;
-    [SerializeField] private Renderer mainRenderer;
+    [SerializeField] private ControlPanel _controlPanel;
+    [SerializeField] private Shader _mainRendererShader;
 
     void Start()
     {
@@ -19,7 +19,9 @@ public class EntryPoint : MonoBehaviour
             d.Activate();
         }
 
-        mainRenderer.Initialize();
-        controlPanel.Initialize(mainRenderer);
+        var mainRenderer = new Renderer();
+
+        mainRenderer.Initialize(_mainRendererShader);
+        _controlPanel.Initialize(mainRenderer);
     }
 }
