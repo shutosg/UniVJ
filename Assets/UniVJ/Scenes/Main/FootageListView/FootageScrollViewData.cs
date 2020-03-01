@@ -3,12 +3,22 @@
 /// </summary>
 public class FootageScrollViewData
 {
-    public string SceneName { get; }
+    public string FootageName { get; }
+    public string DisplayName { get; }
     public int Index { get; }
+    public FootageType Type { get; }
 
-    public FootageScrollViewData(string sceneName)
+    public FootageScrollViewData(string footageName, string displayName = "", FootageType type = FootageType.Scene)
     {
-        SceneName = sceneName;
+        FootageName = footageName;
+        DisplayName = string.IsNullOrEmpty(displayName) ? footageName : displayName;
+        Type = type;
     }
 }
 
+public enum FootageType
+{
+    Scene,
+    Video,
+    Image,
+}

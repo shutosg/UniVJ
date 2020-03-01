@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.Video;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UniRx.Async;
 
@@ -24,11 +25,44 @@ public class LayerManager
     }
 
     /// <summary>
+    /// フッテージの読み込み
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="layer"></param>
+    /// <returns></returns>
+    public async void LoadFootage(FootageScrollViewData data, Layers layer)
+    {
+
+        switch(data.Type) {
+            case FootageType.Scene:
+                await LoadSceneAsync(data.FootageName, layer);
+                break;
+            case FootageType.Video:
+                await LoadSceneAsync("Video", layer);
+                // TODO: シーンマネージャにやらせる
+                var players = loadedScenes[layer].GetRootGameObjects()[0].GetComponentsInChildren<VideoPlayer>();
+                foreach(var player in players) player.url = data.FootageName;
+                break;
+            case FootageType.Image:
+                var loadScene = LoadSceneAsync("Image", layer);
+                var loadTexture = FootageManager.LoadTexture(data.DisplayName);
+                await UniTask.WhenAll(loadScene, loadTexture);
+                // TODO: シーンマネージャにやらせる
+                var images = loadedScenes[layer].GetRootGameObjects()[0].GetComponentsInChildren<RawImage>();
+                var tex = loadTexture.Result;
+                foreach(var image in images) image.texture = tex;
+                var aspectFitters = loadedScenes[layer].GetRootGameObjects()[0].GetComponentsInChildren<AspectRatioFitter>();
+                foreach(var fitter in aspectFitters) fitter.aspectRatio = (float)tex.width / tex.height;
+                break;
+        }
+    }
+
+    /// <summary>
     /// シーンを読み込む
     /// </summary>
     /// <param name="sceneName">シーン名</param>
     /// <param name="layer">追加先のレイヤー</param>
-    public async void LoadSceneAsync(string sceneName, Layers layer)
+    public async UniTask LoadSceneAsync(string sceneName, Layers layer)
     {
         // 対象のレイヤーが処理中なら無視
         if (isLocking.ContainsKey(layer)) return;
