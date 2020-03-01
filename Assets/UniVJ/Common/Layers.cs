@@ -2,11 +2,10 @@
 {
     Default = 0,
     UI = 5,
-    Scene1 = 11,
-    Scene2 = 12,
-    Scene3 = 13,
-    Scene4 = 14,
-    Scene5 = 15,
+    Layer1 = 11,
+    Layer2 = 12,
+    Layer3 = 13,
+    Layer4 = 14,
 }
 
 public static class LayersExtension

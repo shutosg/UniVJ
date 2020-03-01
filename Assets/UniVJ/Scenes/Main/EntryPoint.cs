@@ -19,7 +19,7 @@ public class EntryPoint : MonoBehaviour
             d.Activate();
         }
 
-        var mainRenderer = new Renderer();
+        var mainRenderer = new MainRenderer();
 
         mainRenderer.Initialize(_mainRendererShader);
         _controlPanel.Initialize(mainRenderer);
