@@ -8,6 +8,7 @@ using UniRx.Async;
 
 public class EntryPoint : MonoBehaviour
 {
+    public static readonly Vector2Int Resolution = new Vector2Int(1280, 720);
     [SerializeField] private ControlPanel _controlPanel;
     [SerializeField] private Shader _mainRendererShader;
 
@@ -21,7 +22,7 @@ public class EntryPoint : MonoBehaviour
 
         var mainRenderer = new MainRenderer();
 
-        mainRenderer.Initialize(_mainRendererShader);
+        mainRenderer.Initialize(_mainRendererShader, Resolution);
         _controlPanel.Initialize(mainRenderer);
     }
 }

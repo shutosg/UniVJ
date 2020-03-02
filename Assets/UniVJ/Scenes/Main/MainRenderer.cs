@@ -17,12 +17,12 @@ public class MainRenderer
     /// 初期化
     /// </summary>
     /// <param name="mixShader">最終的な出力を行なうために使うシェーダ</param>
-    public void Initialize(Shader mixShader)
+    public void Initialize(Shader mixShader, Vector2Int resolution)
     {
         _mixMaterial = new Material(mixShader);
         for (var i = 0; i < 4; i++)
         {
-            var rt = new RenderTexture(1920, 1080, 0);
+            var rt = new RenderTexture(resolution.x, resolution.y, 0);
             _subSceneRenderTextures.Add(rt);
             _mixMaterial.SetTexture($"_Tex{i + 1}", rt);
             _shaderPropertyIDs.Add(Shader.PropertyToID($"_BlendingFactor{i + 1}"));

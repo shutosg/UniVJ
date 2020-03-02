@@ -25,8 +25,11 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
     protected override void Initialize()
     {
         base.Initialize();
-        Context.OnCellClicked = SelectCell;
-        Context.OnCellSelectClicked = i => _onSelectData.OnNext(ItemsSource[i / startAxisCellCount][i % startAxisCellCount]);
+        // 選択されてる状態でタップされたら読み込む
+        Context.OnCellClicked = i => {
+            if(Context.SelectedIndex != i) SelectCell(i);
+            else _onSelectData.OnNext(ItemsSource[i / startAxisCellCount][i % startAxisCellCount]);
+        };
     }
 
     public void UpdateSelection(int index)
@@ -46,8 +49,9 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
     /// <param name="items"></param>
     protected override void UpdateContents(IList<FootageScrollViewData[]> items)
     {
-        var columnCount = 3;
+        var columnCount = startAxisCellCount;
         var width = (cellContainer as RectTransform).rect.width;
+        // TODO: ScreenManager
         var targetWidth = width / columnCount - startAxisSpacing * (columnCount - 1) / columnCount;
         cellSize = new Vector2(targetWidth, targetWidth * cellSize.y / cellSize.x);
         base.UpdateContents(items);
