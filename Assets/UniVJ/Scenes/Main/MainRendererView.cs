@@ -11,7 +11,7 @@ using UniRx;
 /// </summary>
 public class MainRendererView : MonoBehaviour
 {
-    [SerializeField] private RawImage _mainImage;
+    [SerializeField] private RawImage[] _mainImages;
     [SerializeField] private LayerView[] _layerViews;
     public IReadOnlyList<IObservable<float>> OnChangeBlendingValues { get; private set; }
     public Layers SelectedLayer => _selectedLayer.Value;
@@ -24,7 +24,7 @@ public class MainRendererView : MonoBehaviour
     /// <param name="layerTextures"></param>
     public void Initialize(Material mainImageMaterial, IReadOnlyList<RenderTexture> layerTextures)
     {
-        _mainImage.material = mainImageMaterial;
+        foreach (var m in _mainImages) m.material = mainImageMaterial;
         for (var i = 0; i < _layerViews.Length; i++)
         {
             _layerViews[i].Initialize(layerTextures[i], 0);

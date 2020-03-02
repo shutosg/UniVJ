@@ -13,7 +13,7 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
     [SerializeField] Image _cursorImage;
     [SerializeField] RawImage _screenShot;
     [SerializeField] AspectRatioFitter _aspectRatioFitter;
-    [SerializeField] Button _selectButton;
+    [SerializeField] Button _loadButton;
     [SerializeField] Button _button;
     [SerializeField] Color _selectedCursorColor;
     [SerializeField] Color _nonSelectedCursorColor;
@@ -22,7 +22,7 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
     void Start()
     {
         _button.onClick.AddListener(() => Context.OnCellClicked?.Invoke(Index));
-        _selectButton.onClick.AddListener(() => {
+        _loadButton.onClick.AddListener(() => {
             Context.OnCellClicked?.Invoke(Index);
             Context.OnCellSelectClicked?.Invoke(Index);
         });

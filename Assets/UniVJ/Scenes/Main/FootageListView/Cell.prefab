@@ -273,7 +273,7 @@ MonoBehaviour:
   _cursorImage: {fileID: 114838212754810210}
   _screenShot: {fileID: 8518780019679200329}
   _aspectRatioFitter: {fileID: 6502232221575908514}
-  _selectButton: {fileID: 5659669271499113931}
+  _loadButton: {fileID: 5659669271499113931}
   _button: {fileID: 114221931273792762}
   _selectedCursorColor: {r: 1, g: 0, b: 0, a: 1}
   _nonSelectedCursorColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 6357306659549091807}
   - component: {fileID: 5659669271499113931}
   m_Layer: 5
-  m_Name: SelectButton
+  m_Name: LoadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -325,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10, y: 10}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6047770918375258484
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 4791174711325972879}
   - component: {fileID: 9117268028757280908}
   m_Layer: 5
-  m_Name: Select
+  m_Name: Load
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,4 +568,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select
+  m_Text: Load
