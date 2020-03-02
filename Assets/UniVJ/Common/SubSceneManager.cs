@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubSceneCamera : MonoBehaviour
+public class SubSceneManager : MonoBehaviour
 {
     [SerializeField] private Camera _sceneCamera;
     [SerializeField] private Light[] _sceneLights;
@@ -34,4 +34,6 @@ public class SubSceneCamera : MonoBehaviour
         if(_renderMaterial == null) return;
         Graphics.Blit(src, _targetTexture, _renderMaterial);
     }
+
+    public virtual void SetSeekValue(float value) { }
 }

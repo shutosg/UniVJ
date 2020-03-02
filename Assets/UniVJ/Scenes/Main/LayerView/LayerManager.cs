@@ -13,6 +13,7 @@ public class LayerManager
 {
     private MainRenderer _mainRenderer;
     private Dictionary<Layers, Scene> loadedScenes = new Dictionary<Layers, Scene>();
+    private Dictionary<Layers, SubSceneManager> loadedSubSceneManagers = new Dictionary<Layers, SubSceneManager>();
     private Dictionary<Layers, bool> isLocking = new Dictionary<Layers, bool>();
 
     /// <summary>
@@ -30,29 +31,22 @@ public class LayerManager
     /// <param name="data"></param>
     /// <param name="layer"></param>
     /// <returns></returns>
-    public async void LoadFootage(FootageScrollViewData data, Layers layer)
+    public async UniTask LoadFootage(FootageScrollViewData data, Layers layer, Action<float> onUpdateTime = null)
     {
-
+        // シーンの読み込みと初期化
         switch(data.Type) {
             case FootageType.Scene:
-                await LoadSceneAsync(data.FootageName, layer);
+                await loadSceneAsync(data.FootageName, layer);
                 break;
             case FootageType.Video:
-                await LoadSceneAsync("Video", layer);
-                // TODO: シーンマネージャにやらせる
-                var players = loadedScenes[layer].GetRootGameObjects()[0].GetComponentsInChildren<VideoPlayer>();
-                foreach(var player in players) player.url = data.FootageName;
+                await loadSceneAsync("Video", layer);
+                var videoSceneManager = loadedSubSceneManagers[layer] as VideoSceneManager;
+                videoSceneManager.LoadVideo(data.FootageName, onUpdateTime);
                 break;
             case FootageType.Image:
-                var loadScene = LoadSceneAsync("Image", layer);
-                var loadTexture = FootageManager.LoadTexture(data.DisplayName);
-                await UniTask.WhenAll(loadScene, loadTexture);
-                // TODO: シーンマネージャにやらせる
-                var images = loadedScenes[layer].GetRootGameObjects()[0].GetComponentsInChildren<RawImage>();
-                var tex = loadTexture.Result;
-                foreach(var image in images) image.texture = tex;
-                var aspectFitters = loadedScenes[layer].GetRootGameObjects()[0].GetComponentsInChildren<AspectRatioFitter>();
-                foreach(var fitter in aspectFitters) fitter.aspectRatio = (float)tex.width / tex.height;
+                await loadSceneAsync("Image", layer);
+                var imageSceneManager = loadedSubSceneManagers[layer] as ImageSceneManager;
+                imageSceneManager.LoadImage(data.DisplayName);
                 break;
         }
     }
@@ -62,7 +56,7 @@ public class LayerManager
     /// </summary>
     /// <param name="sceneName">シーン名</param>
     /// <param name="layer">追加先のレイヤー</param>
-    public async UniTask LoadSceneAsync(string sceneName, Layers layer)
+    private async UniTask loadSceneAsync(string sceneName, Layers layer)
     {
         // 対象のレイヤーが処理中なら無視
         if (isLocking.ContainsKey(layer)) return;
@@ -95,6 +89,7 @@ public class LayerManager
         // 処理中フラグを立てて読み込み開始
         isLocking.Add(layer, true);
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        loadedSubSceneManagers.Add(layer, loadedScenes[layer].GetRootGameObjects()[0].GetComponent<SubSceneManager>());
     }
 
     public async UniTask UnloadSceneAsync(Layers layer)
@@ -106,6 +101,7 @@ public class LayerManager
         await SceneManager.UnloadSceneAsync(loadedScenes[layer]);
         isLocking.Remove(layer);
         loadedScenes.Remove(layer);
+        loadedSubSceneManagers.Remove(layer);
     }
 
     private void onLoadedSceneAsLayer1(Scene scene, LoadSceneMode mode)
@@ -149,8 +145,8 @@ public class LayerManager
     {
         var rootObjects = scene.GetRootGameObjects();
         rootObjects.ForEach(go => go.SetLayerRecursively((int)layer));
-        // NOTE: rootObjectの1つめの子にメインカメラが居る前提
-        var subSceneCamera = rootObjects[0].GetComponentInChildren<SubSceneCamera>();
-        _mainRenderer.RegistorySubScene(subSceneCamera, layer);
+        // NOTE: rootObjectの1つめにシーンマネージャが居る前提
+        var subSceneManager = rootObjects[0].GetComponent<SubSceneManager>();
+        _mainRenderer.RegistorySubScene(subSceneManager, layer);
     }
 }

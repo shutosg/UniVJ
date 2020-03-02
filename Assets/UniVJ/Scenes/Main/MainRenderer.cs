@@ -45,11 +45,11 @@ public class MainRenderer
     /// <summary>
     /// 自身の持っている RenderTexture を合成元のシーンカメラの出力先に設定する
     /// </summary>
-    /// <param name="camera">シーンカメラ</param>
+    /// <param name="manager">サブシーンマネージャ</param>
     /// <param name="layer">割り当てるレイヤー</param>
-    public void RegistorySubScene(SubSceneCamera camera, Layers layer)
+    public void RegistorySubScene(SubSceneManager manager, Layers layer)
     {
-        camera.Setup(_subSceneRenderTextures[(int)layer - (int)Layers.Layer1], layer);
+        manager.Setup(_subSceneRenderTextures[(int)layer - (int)Layers.Layer1], layer);
     }
 
     /// <summary>
