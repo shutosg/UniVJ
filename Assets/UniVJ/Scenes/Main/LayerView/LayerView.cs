@@ -16,6 +16,7 @@ public class LayerView : MonoBehaviour
     [SerializeField] private Slider _seekBar;
     [SerializeField] private Slider _blendingFactor;
     public IObservable<float> OnChangeBlendingSliderValue => _blendingFactor.OnValueChangedAsObservable();
+    public IObservable<float> OnChangeSeekSliderValue => _seekBar.OnValueChangedAsObservable();
     public IObservable<Unit> OnClickButton => _selectButton.OnClickAsObservable();
 
     public void Initialize(RenderTexture renderTexture, float blendingFactor)
@@ -26,9 +27,14 @@ public class LayerView : MonoBehaviour
     }
 
     public void SetBlendingSliderValue(float value) => _blendingFactor.value = value;
+    public void SetSeekSliderValue(float value) => _seekBar.value = value;
 
-    public void UpdateUI(bool isSelected)
+    public void UpdateUI(bool? isSelected = null, bool? showSeekBar = null)
     {
-        _cursor.color = isSelected ? Color.red : Color.gray;
+        if(isSelected != null)
+            _cursor.color = isSelected.Value ? Color.red : Color.gray;
+
+        if(showSeekBar != null)
+            _seekBar.gameObject.SetActive(showSeekBar.Value);
     }
 }

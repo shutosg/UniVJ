@@ -14,6 +14,7 @@ public class MainRendererView : MonoBehaviour
     [SerializeField] private RawImage[] _mainImages;
     [SerializeField] private LayerView[] _layerViews;
     public IReadOnlyList<IObservable<float>> OnChangeBlendingValues { get; private set; }
+    public IReadOnlyList<IObservable<float>> OnChangeSeekValues { get; private set; }
     public Layers SelectedLayer => _selectedLayer.Value;
     private ReactiveProperty<Layers> _selectedLayer = new ReactiveProperty<Layers>(Layers.Layer1);
 
@@ -31,9 +32,10 @@ public class MainRendererView : MonoBehaviour
             var layer = Layers.Layer1 + i;
             _layerViews[i].OnClickButton.Subscribe(_ => _selectedLayer.Value = layer);
             var index = i;
-            _selectedLayer.Subscribe(l => _layerViews[index].UpdateUI(layer == l));
+            _selectedLayer.Subscribe(l => _layerViews[index].UpdateUI(isSelected: layer == l));
         }
         OnChangeBlendingValues = _layerViews.Select(v => v.OnChangeBlendingSliderValue).ToList();
+        OnChangeSeekValues = _layerViews.Select(v => v.OnChangeSeekSliderValue).ToList();
     }
 
     /// <summary>
@@ -42,4 +44,13 @@ public class MainRendererView : MonoBehaviour
     /// <param name="layer">対象のレイヤー</param>
     /// <param name="value">値</param>
     public void SetBlendingSlider(Layers layer, float value) => _layerViews[layer - Layers.Layer1].SetBlendingSliderValue(Mathf.Clamp01(value));
+
+    /// <summary>
+    /// Seek のスライダを操作する
+    /// </summary>
+    /// <param name="layer">対象のレイヤー</param>
+    /// <param name="value">値</param>
+    public void SetSeekSlider(Layers layer, float value) => _layerViews[layer - Layers.Layer1].SetSeekSliderValue(Mathf.Clamp01(value));
+
+    public void UpdateLayerView(Layers layer, bool? isSelected = null, bool? showSeekBar = null) => _layerViews[layer - Layers.Layer1].UpdateUI(isSelected, showSeekBar);
 }

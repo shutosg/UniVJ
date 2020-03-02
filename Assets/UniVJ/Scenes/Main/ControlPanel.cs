@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UniRx;
 
@@ -20,6 +21,15 @@ public class ControlPanel : MonoBehaviour
         _footageListView.Initialize(footageData);
         // レイヤビュー初期化
         var layerManager = new LayerManager(_mainRenderer);
-        _footageListView.OnSelectData.Subscribe(data => layerManager.LoadFootage(data, _rendererView.SelectedLayer));
+        // リストのデータが選択されたら素材の読み込みと View の更新
+        _footageListView.OnSelectData.Subscribe(async data => {
+            var selectedLayer = _rendererView.SelectedLayer;
+            Action<float> onUpdateTime = null;
+            var isVideo = data.Type == FootageType.Video;
+            if (isVideo) onUpdateTime = value => _rendererView.SetSeekSlider(selectedLayer, value);
+            await layerManager.LoadFootage(data, selectedLayer, onUpdateTime);
+            _rendererView.UpdateLayerView(selectedLayer, showSeekBar: isVideo);
+            _rendererView.SetSeekSlider(selectedLayer, 0);
+        });
     }
 }

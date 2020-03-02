@@ -51,6 +51,8 @@ public class LayerManager
         }
     }
 
+    public void SetSeekValue(Layers layer, float value) => loadedSubSceneManagers[layer].SetSeekValue(value);
+
     /// <summary>
     /// シーンを読み込む
     /// </summary>
