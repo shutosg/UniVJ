@@ -41,7 +41,7 @@ public class LayerManager
             case FootageType.Video:
                 await loadSceneAsync("Video", layer);
                 var videoSceneManager = loadedSubSceneManagers[layer] as VideoSceneManager;
-                videoSceneManager.LoadVideo(data.FootagePath, onUpdateTime);
+                videoSceneManager.LoadVideo(data.FootagePath, onUpdateTime).Forget();
                 break;
             case FootageType.Image:
                 await loadSceneAsync("Image", layer);
@@ -51,7 +51,16 @@ public class LayerManager
         }
     }
 
-    public void SetSeekValue(Layers layer, float value) => loadedSubSceneManagers[layer].SetSeekValue(value);
+    public void SetSeekValue(Layers layer, float value) => loadedSubSceneManagers[layer].SetSeekValue(value).Forget();
+
+    public async UniTask<VideoSceneManager> LoadThumbnailMakerScene()
+    {
+        if (!loadedSubSceneManagers.ContainsKey(Layers.ThumbnailMaker))
+        {
+            await loadSceneAsync("video", Layers.ThumbnailMaker);
+        }
+        return loadedSubSceneManagers[Layers.ThumbnailMaker] as VideoSceneManager;
+    }
 
     /// <summary>
     /// シーンを読み込む
@@ -84,7 +93,11 @@ public class LayerManager
             case Layers.Layer4:
                 SceneManager.sceneLoaded += onLoadedSceneAsLayer4;
                 break;
+            case Layers.ThumbnailMaker:
+                SceneManager.sceneLoaded += onLoadedSceneAsThumbnailMaker;
+                break;
             default:
+                UnityEngine.Debug.LogError("未登録のレイヤーが指定された");
                 break;
         }
 
@@ -136,6 +149,14 @@ public class LayerManager
         loadedScenes.Add(Layers.Layer4, scene);
         setLayer(scene, Layers.Layer4);
         SceneManager.sceneLoaded -= onLoadedSceneAsLayer4;
+    }
+
+    private void onLoadedSceneAsThumbnailMaker(Scene scene, LoadSceneMode mode)
+    {
+        isLocking.Remove(Layers.ThumbnailMaker);
+        loadedScenes.Add(Layers.ThumbnailMaker, scene);
+        setLayer(scene, Layers.ThumbnailMaker);
+        SceneManager.sceneLoaded -= onLoadedSceneAsThumbnailMaker;
     }
 
     /// <summary>

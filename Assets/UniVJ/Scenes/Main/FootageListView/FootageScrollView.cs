@@ -22,11 +22,14 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
     private Subject<FootageScrollViewData> _onSelectData = new Subject<FootageScrollViewData>();
 
     [Inject] private FootageManager _footageManager;
+    [Inject] private ThumbnailMaker _thumbnailMaker;
 
     public void InitializeView() => Initialize();
 
     protected override void Initialize()
     {
+        if(initialized) return;
+        initialized = true;
         base.Initialize();
         // 選択されてる状態でタップされたら読み込む
         Context.OnCellClicked = i => {
@@ -34,14 +37,12 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
             else _onSelectData.OnNext(ItemsSource[i / startAxisCellCount][i % startAxisCellCount]);
         };
         Context.FootageManager = _footageManager;
+        Context.ThumbnailMaker = _thumbnailMaker;
     }
 
     public void UpdateSelection(int index)
     {
-        if (Context.SelectedIndex == index)
-        {
-            return;
-        }
+        if (Context.SelectedIndex == index) return;
 
         Context.SelectedIndex = index;
         Refresh();
@@ -69,17 +70,12 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
         }
     }
 
-    public void UpdateData(IList<FootageScrollViewData> items)
-    {
-        UpdateContents(items);
-    }
+    public void UpdateData(IList<FootageScrollViewData> items) => UpdateContents(items);
 
     public void SelectCell(int index)
     {
-        if (DataCount == 0 || !isValid(index))
-        {
-            return;
-        }
+        if (DataCount == 0 || !isValid(index)) return;
+
         UpdateSelection(index);
         ScrollTo(index, 0.2f, Ease.OutQuint);
     }

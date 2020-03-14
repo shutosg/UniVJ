@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -13,10 +14,11 @@ using UniRx.Async;
 /// </summary>
 public class FootageManager
 {
-    private static readonly string FootagePath = "/Users/shuto/UniVJ/Footages/";
+    public static readonly string FootagePath = "/Users/shuto/UniVJ/Footages/";
+    public static readonly string ThumbnailPath = "/Users/shuto/UniVJ/Footages/.thumbnails/";
     private static readonly string[] TargetExtensions = new string[] { ".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif" };
-
     private static readonly Dictionary<string, Texture2D> imageCache = new Dictionary<string, Texture2D>();
+
 
     /// <summary>
     /// 素材リストに表示するためのすべての素材データを返す
@@ -32,17 +34,12 @@ public class FootageManager
             .Concat(GetFootagePathData());
     }
 
-    public IEnumerable<string> GetFootagePathes()
-        => Directory.EnumerateFiles(FootagePath, "*", SearchOption.AllDirectories)
-        .Select(path => (path: path, extension: Path.GetExtension(path)))
-        .Where(x => TargetExtensions.Contains(x.extension))
-        .Select(x => x.path);
-
     /// <summary>
     /// 素材ディレクトリに存在する対象のメディアファイルの素材データを返す
     /// </summary>
     public IEnumerable<FootageScrollViewData> GetFootagePathData()
         => Directory.EnumerateFiles(FootagePath, "*", SearchOption.AllDirectories)
+        .Where(path => path.IndexOf(ThumbnailPath) == -1)
         .Select(path => (relativePath: path, extension: Path.GetExtension(path)))
         .Where(x => TargetExtensions.Contains(x.extension))
         .Select(x => {
@@ -77,12 +74,9 @@ public class FootageManager
         imageCache.Add(fileName, null);
 
         // 読み込み開始
-        using (var uwr = new UnityWebRequest("file://" + FootagePath + fileName))
+        using (var uwr = UnityWebRequestTexture.GetTexture("file://" + FootagePath + fileName))
         {
-            var handler = new DownloadHandlerTexture();
-            uwr.downloadHandler = handler;
             await uwr.SendWebRequest();
-            token.ThrowIfCancellationRequested();
             // 失敗したらキャッシュ消して抜ける
             if (uwr.isNetworkError || uwr.isHttpError)
             {
@@ -90,8 +84,12 @@ public class FootageManager
                 Debug.LogError($"{uwr.url} が存在しない");
                 return null;
             }
-            imageCache[fileName] = handler.texture;
-            return handler.texture;
+            var tex = DownloadHandlerTexture.GetContent(uwr);
+            imageCache[fileName] = tex;
+            try {
+                token.ThrowIfCancellationRequested();
+            } catch (OperationCanceledException){ }
+            return tex;
         }
     }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// 素材リスト
@@ -10,6 +11,7 @@ public class FootageListView : MonoBehaviour
 {
     [SerializeField] private FootageScrollView _scrollView;
     public IObservable<FootageScrollViewData> OnSelectData => _scrollView.OnSelectData;
+    [Inject] ThumbnailMaker _thumbnailMaker;
 
     public void Initialize(IList<FootageScrollViewData> items)
     {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UniRx.Async;
+
 public class SubSceneManager : MonoBehaviour
 {
     [SerializeField] private Camera _sceneCamera;
@@ -35,5 +37,5 @@ public class SubSceneManager : MonoBehaviour
         Graphics.Blit(src, _targetTexture, _renderMaterial);
     }
 
-    public virtual void SetSeekValue(float value) { }
+    public virtual async UniTask SetSeekValue(float value) { }
 }

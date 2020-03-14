@@ -6,6 +6,7 @@
     Layer2 = 12,
     Layer3 = 13,
     Layer4 = 14,
+    ThumbnailMaker = 21,
 }
 
 public static class LayersExtension

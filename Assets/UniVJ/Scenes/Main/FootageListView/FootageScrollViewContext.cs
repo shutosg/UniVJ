@@ -10,4 +10,5 @@ public class FootageScrollViewContext : FancyGridViewContext
     public Action<int> OnCellClicked;
     public Action<int> OnCellSelectClicked;
     public FootageManager FootageManager;
+    public ThumbnailMaker ThumbnailMaker;
 }

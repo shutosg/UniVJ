@@ -17,5 +17,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<FootageListView>().FromInstance(_footageListView).AsSingle().NonLazy();
         Container.Bind<FootageScrollView>().FromInstance(_footageScrollView).AsSingle().NonLazy();
         Container.Bind<LayerManager>().AsSingle().NonLazy();
+        Container.Bind<ThumbnailMaker>().AsSingle().NonLazy();
     }
 }

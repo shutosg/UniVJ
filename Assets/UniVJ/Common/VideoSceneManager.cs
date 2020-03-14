@@ -10,15 +10,13 @@ public class VideoSceneManager : SubSceneManager
     [SerializeField] private VideoPlayer _frontVideo;
     [SerializeField] private VideoPlayer _backVideo;
 
-    private double _length;
     private Action<float> _onUpdateTime;
 
-    public async void LoadVideo(string url, Action<float> onUpdateTime)
+    public async UniTask LoadVideo(string url, Action<float> onUpdateTime = null)
     {
         _frontVideo.url = url;
         _backVideo.url = url;
-        await UniTask.WhenAll(UniTask.WaitUntil(() => _frontVideo.isPrepared), UniTask.WaitUntil(() => _backVideo.isPrepared));
-        _length = _frontVideo.length;
+        await UniTask.WaitUntil(() => _frontVideo.isPrepared && _backVideo.isPrepared);
         _onUpdateTime = onUpdateTime;
     }
 
@@ -28,14 +26,27 @@ public class VideoSceneManager : SubSceneManager
         _backVideo.playbackSpeed = speed;
     }
 
-    public override void SetSeekValue(float value)
+    public override async UniTask SetSeekValue(float value)
     {
-        _frontVideo.time = _length * value;
-        _backVideo.time = _length * value;
+        var isPaused = _frontVideo.isPaused;
+        _frontVideo.Play();
+        _backVideo.Play();
+        var targetTime = _frontVideo.length * value;
+        _frontVideo.time = targetTime;
+        _backVideo.time = targetTime;
+        await UniTask.WaitUntil(() => _frontVideo.time >= targetTime && _backVideo.time >= targetTime);
+        if(isPaused) await Pause();
+    }
+
+    public async UniTask Pause()
+    {
+        _frontVideo.Pause();
+        _backVideo.Pause();
+        await UniTask.WaitUntil(() => _frontVideo.isPaused && _backVideo.isPaused);
     }
 
     void Update()
     {
-        _onUpdateTime?.Invoke((float)(_frontVideo.time / _length));
+        _onUpdateTime?.Invoke((float)(_frontVideo.time / _frontVideo.length));
     }
 }
