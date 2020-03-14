@@ -508,8 +508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0669d06f4604b5daf016effc0d01b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rendererView: {fileID: 2707375957726354684}
-  _footageListView: {fileID: 8354961105242042085}
 --- !u!1 &5456746426713392764
 GameObject:
   m_ObjectHideFlags: 0

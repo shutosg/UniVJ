@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx.Async;
+using Zenject;
 
 public class ImageSceneManager : SubSceneManager
 {
@@ -10,9 +10,11 @@ public class ImageSceneManager : SubSceneManager
     [SerializeField] private RawImage _backImage;
     [SerializeField] private AspectRatioFitter[] aspectFitters;
 
+    [Inject] FootageManager _footageManager;
+
     public async void LoadImage(string fileName)
     {
-        var tex = await FootageManager.LoadTexture(fileName);
+        var tex = await _footageManager.LoadTexture(fileName);
         _frontImage.texture = tex;
         _backImage.texture = tex;
         foreach (var fitter in aspectFitters)

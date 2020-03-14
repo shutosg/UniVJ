@@ -35,6 +35,7 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
         _screenShot.texture = null;
         _aspectRatioFitter.aspectRatio = 192f / 108;
 
+        // サムネイル読み込み
         cancellationTokenSource?.Cancel();
         cancellationTokenSource = new CancellationTokenSource();
         switch(itemData.Type)
@@ -54,7 +55,7 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
         async void loadTexture(CancellationToken token)
         {
             try {
-                var tex = await FootageManager.LoadTexture(itemData.DisplayName, token);
+                var tex = await Context.FootageManager.LoadTexture(itemData.DisplayName, token);
                 _screenShot.texture = tex;
                 _aspectRatioFitter.aspectRatio = (float)tex.width / tex.height;
             } catch (OperationCanceledException) { }

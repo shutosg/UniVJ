@@ -41,7 +41,7 @@ public class LayerManager
             case FootageType.Video:
                 await loadSceneAsync("Video", layer);
                 var videoSceneManager = loadedSubSceneManagers[layer] as VideoSceneManager;
-                videoSceneManager.LoadVideo(data.FootageName, onUpdateTime);
+                videoSceneManager.LoadVideo(data.FootagePath, onUpdateTime);
                 break;
             case FootageType.Image:
                 await loadSceneAsync("Image", layer);

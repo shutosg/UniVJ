@@ -5,6 +5,7 @@ using EasingCore;
 using FancyScrollView;
 
 using UniRx;
+using Zenject;
 
 /// <summary>
 /// 素材リスト
@@ -20,6 +21,8 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
     public IObservable<FootageScrollViewData> OnSelectData => _onSelectData;
     private Subject<FootageScrollViewData> _onSelectData = new Subject<FootageScrollViewData>();
 
+    [Inject] private FootageManager _footageManager;
+
     public void InitializeView() => Initialize();
 
     protected override void Initialize()
@@ -30,6 +33,7 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
             if(Context.SelectedIndex != i) SelectCell(i);
             else _onSelectData.OnNext(ItemsSource[i / startAxisCellCount][i % startAxisCellCount]);
         };
+        Context.FootageManager = _footageManager;
     }
 
     public void UpdateSelection(int index)

@@ -17,7 +17,7 @@ public class MainRenderer
     /// 初期化
     /// </summary>
     /// <param name="mixShader">最終的な出力を行なうために使うシェーダ</param>
-    public void Initialize(Shader mixShader, Vector2Int resolution)
+    public MainRenderer(MainRendererView view, Shader mixShader, Vector2Int resolution)
     {
         _mixMaterial = new Material(mixShader);
         for (var i = 0; i < 4; i++)
@@ -27,14 +27,6 @@ public class MainRenderer
             _mixMaterial.SetTexture($"_Tex{i + 1}", rt);
             _shaderPropertyIDs.Add(Shader.PropertyToID($"_BlendingFactor{i + 1}"));
         }
-    }
-
-    /// <summary>
-    /// View の初期化とデータとのバインディング
-    /// </summary>
-    /// <param name="view"></param>
-    public void InitializeView(MainRendererView view)
-    {
         view.Initialize(_mixMaterial, _subSceneRenderTextures);
         // 入力を監視してパラメタを操作する
         view.OnChangeBlendingValues.ForEach((onChangeValue, i) => onChangeValue.Subscribe(v => SetFadeValue(i, v)));

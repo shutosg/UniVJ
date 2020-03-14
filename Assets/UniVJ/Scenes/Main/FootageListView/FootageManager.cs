@@ -18,36 +18,51 @@ public class FootageManager
 
     private static readonly Dictionary<string, Texture2D> imageCache = new Dictionary<string, Texture2D>();
 
-    public static IEnumerable<FootageScrollViewData> GetAllFootageData()
-        => GetAllSceneNames()
-        .Where(name => name != "Main")
-        .Where(name => name != "Video")
-        .Where(name => name != "Image")
-        .Select(name => new FootageScrollViewData(name))
-        .Concat(GetFootagePathData())
-        .ToList();
+    /// <summary>
+    /// 素材リストに表示するためのすべての素材データを返す
+    /// </summary>
+    public IEnumerable<FootageScrollViewData> GetAllFootageData()
+    {
+        return GetAllScenePathes()
+            .Select(path => (path: path, name: Path.GetFileNameWithoutExtension(path)))
+            .Where(x => x.name != "Main")
+            .Where(x => x.name != "Video")
+            .Where(x => x.name != "Image")
+            .Select(x => new FootageScrollViewData(x.name, x.path))
+            .Concat(GetFootagePathData());
+    }
 
-    public static IEnumerable<string> GetFootagePathes()
+    public IEnumerable<string> GetFootagePathes()
         => Directory.EnumerateFiles(FootagePath, "*", SearchOption.AllDirectories)
         .Select(path => (path: path, extension: Path.GetExtension(path)))
         .Where(x => TargetExtensions.Contains(x.extension))
         .Select(x => x.path);
 
-    public static IEnumerable<FootageScrollViewData> GetFootagePathData()
+    /// <summary>
+    /// 素材ディレクトリに存在する対象のメディアファイルの素材データを返す
+    /// </summary>
+    public IEnumerable<FootageScrollViewData> GetFootagePathData()
         => Directory.EnumerateFiles(FootagePath, "*", SearchOption.AllDirectories)
-        .Select(path => (path: path, extension: Path.GetExtension(path)))
+        .Select(path => (relativePath: path, extension: Path.GetExtension(path)))
         .Where(x => TargetExtensions.Contains(x.extension))
         .Select(x => {
             var type = FootageType.Image;
             if (x.extension == ".mp4" || x.extension == ".mov") type = FootageType.Video;
-            return new FootageScrollViewData(x.path, x.path.Substring(FootagePath.Length), type);
+            return new FootageScrollViewData(x.relativePath, x.relativePath, x.relativePath.Substring(FootagePath.Length), type);
         });
 
-    public static IEnumerable<string> GetAllSceneNames() => Enumerable.Range(0, SceneManager.sceneCountInBuildSettings)
-        .Select(i => SceneUtility.GetScenePathByBuildIndex(i))
-        .Select(path => Path.GetFileNameWithoutExtension(path));
+    /// <summary>
+    /// ビルドに含まれるすべてのシーンパスを返す
+    /// </summary>
+    public IEnumerable<string> GetAllScenePathes() => Enumerable.Range(0, SceneManager.sceneCountInBuildSettings)
+        .Select(i => SceneUtility.GetScenePathByBuildIndex(i));
 
-    public static async UniTask<Texture2D> LoadTexture(string fileName, CancellationToken token = default(CancellationToken))
+    /// <summary>
+    /// 素材フォルダにある画像をテクスチャとして読み込む
+    /// </summary>
+    /// <param name="fileName"></param>
+    /// <param name="token"></param>
+    public async UniTask<Texture2D> LoadTexture(string fileName, CancellationToken token = default(CancellationToken))
     {
         if (imageCache.ContainsKey(fileName))
         {
@@ -72,6 +87,7 @@ public class FootageManager
             if (uwr.isNetworkError || uwr.isHttpError)
             {
                 imageCache.Remove(fileName);
+                Debug.LogError($"{uwr.url} が存在しない");
                 return null;
             }
             imageCache[fileName] = handler.texture;
@@ -79,7 +95,7 @@ public class FootageManager
         }
     }
 
-    public static async UniTask<byte[]> LoadBinary(string fileName, CancellationToken token = default(CancellationToken))
+    public async UniTask<byte[]> LoadBinary(string fileName, CancellationToken token = default(CancellationToken))
     {
         // 読み込み開始
         using (var uwr = new UnityWebRequest("file://" + FootagePath + fileName))
