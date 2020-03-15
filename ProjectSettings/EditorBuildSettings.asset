@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UniVJ/Scenes/SubScenes/Image.unity
     guid: 8612f87bda4be44eb93d637985e55695
+  - enabled: 1
+    path: Assets/UniVJ/Scenes/SubScenes/VFX_Ring.unity
+    guid: b4560713f6cd94b918265f3105d05e08
   m_configObjects: {}
