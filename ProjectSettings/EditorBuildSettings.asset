@@ -12,15 +12,15 @@ EditorBuildSettings:
     path: Assets/UniVJ/Scenes/SubScenes/Test1.unity
     guid: b660e4c9ed81347768503e0ee01d8ed4
   - enabled: 1
-    path: Assets/UniVJ/Scenes/SubScenes/Debug.unity
+    path: Assets/UniVJ/Scenes/SubScenes/Debug/Debug.unity
     guid: 239ca5471d64e45a6976adf8caa25d87
   - enabled: 1
-    path: Assets/UniVJ/Scenes/SubScenes/Video.unity
+    path: Assets/UniVJ/Scenes/SubScenes/Video/Video.unity
     guid: 5d2cc0742c036404fa9ff759a0d9cf6f
   - enabled: 1
-    path: Assets/UniVJ/Scenes/SubScenes/Image.unity
+    path: Assets/UniVJ/Scenes/SubScenes/Image/Image.unity
     guid: 8612f87bda4be44eb93d637985e55695
   - enabled: 1
-    path: Assets/UniVJ/Scenes/SubScenes/VFXRing.unity
+    path: Assets/UniVJ/Scenes/SubScenes/VFXRing/VFXRing.unity
     guid: b4560713f6cd94b918265f3105d05e08
   m_configObjects: {}
