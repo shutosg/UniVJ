@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -276,7 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7917b639a52ee4ea7a2d31506aed5da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationPerFrame: 1
+  _rotationPerFrame: 1
+  _scaleAmplitude: 1
 --- !u!65 &1208350272
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -304,6 +306,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -375,8 +378,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576286321}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
