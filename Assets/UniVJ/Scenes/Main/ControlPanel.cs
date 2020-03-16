@@ -22,7 +22,8 @@ public class ControlPanel : MonoBehaviour
         _footageListView.Initialize(footageData);
         // レイヤビュー初期化
         // リストのデータが選択されたら素材の読み込みと View の更新
-        _footageListView.OnSelectData.Subscribe(async data => {
+        _footageListView.OnSelectData.Subscribe(async data =>
+        {
             var selectedLayer = _rendererView.SelectedLayer;
             Action<float> onUpdateTime = null;
             var isVideo = data.Type == FootageType.Video;

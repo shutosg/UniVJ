@@ -30,23 +30,24 @@ public static class DebugStarter
         var activeScene = EditorSceneManager.GetActiveScene();
         var openedScenes = Enumerable.Range(0, EditorSceneManager.sceneCount)
             .ToList()
-            .Select(i => EditorSceneManager.GetSceneAt(i))
+            .Select(EditorSceneManager.GetSceneAt)
             .OrderByDescending(scene => scene == activeScene)
             .ToList();
-        openedScenes.ForEach(scene => {
+        openedScenes.ForEach(scene =>
+        {
             if (scene.isDirty) EditorSceneManager.SaveScene(scene);
         });
         File.WriteAllText(OpenedScenesPath, string.Join(",", openedScenes.Select(scene => scene.path)));
         // メインシーン読み込み
-        var mainScenePath = getAllSceneAndPathes()
-           .FirstOrDefault(x => x.scene.name == StartSceneName).path;
+        var mainScenePath = getAllSceneAndPaths()
+            .FirstOrDefault(x => x.scene.name == StartSceneName).path;
         EditorSceneManager.OpenScene(mainScenePath, OpenSceneMode.Single);
         EditorApplication.isPlaying = true;
 
         // すべてのシーンを返す
-        IEnumerable<(SceneAsset scene, string path)> getAllSceneAndPathes()
+        IEnumerable<(SceneAsset scene, string path)> getAllSceneAndPaths()
             => AssetDatabase.FindAssets("t:SceneAsset")
-                .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
+                .Select(AssetDatabase.GUIDToAssetPath)
                 .Select(path => (obj: AssetDatabase.LoadAssetAtPath(path, typeof(SceneAsset)), path: path))
                 .Where(x => x.obj != null)
                 .Select(x => (scene: (x.obj as SceneAsset), path: x.path));
@@ -58,14 +59,14 @@ public static class DebugStarter
     /// <param name="state"></param>
     static void onStateChanged(PlayModeStateChange state)
     {
-        if(state != PlayModeStateChange.EnteredEditMode) return;
-        if(!File.Exists(OpenedScenesPath)) return;
+        if (state != PlayModeStateChange.EnteredEditMode) return;
+        if (!File.Exists(OpenedScenesPath)) return;
         var rawText = File.ReadAllText(OpenedScenesPath);
         File.Delete(OpenedScenesPath);
-        var openedScenePathes = rawText.Split(',');
+        var openedScenePates = rawText.Split(',');
         // もともと開いてたシーンを開き直す
-        EditorSceneManager.OpenScene(openedScenePathes[0], OpenSceneMode.Single);
-        openedScenePathes
+        EditorSceneManager.OpenScene(openedScenePates[0], OpenSceneMode.Single);
+        openedScenePates
             .Skip(1)
             .ToList()
             .ForEach(path => EditorSceneManager.OpenScene(path, OpenSceneMode.Additive));

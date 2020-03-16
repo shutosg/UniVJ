@@ -17,7 +17,7 @@ public class VFXRingManager : SubSceneManager
     }
 
     public override void OnReceiveSpeed(float value)
-    {        
+    {
         _vfxRing.SetFloat("ParticleSize", value);
     }
 }

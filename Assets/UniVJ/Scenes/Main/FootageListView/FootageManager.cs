@@ -16,7 +16,7 @@ public class FootageManager
 {
     public static readonly string FootagePath = "/Users/shuto/UniVJ/Footages/";
     public static readonly string ThumbnailPath = "/Users/shuto/UniVJ/Footages/.thumbnails/";
-    private static readonly string[] TargetExtensions = new string[] { ".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif" };
+    private static readonly string[] TargetExtensions = new string[] {".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif"};
     private static readonly Dictionary<string, Texture2D> imageCache = new Dictionary<string, Texture2D>();
 
 
@@ -39,20 +39,22 @@ public class FootageManager
     /// </summary>
     public IEnumerable<FootageScrollViewData> GetFootagePathData()
         => Directory.EnumerateFiles(FootagePath, "*", SearchOption.AllDirectories)
-        .Where(path => path.IndexOf(ThumbnailPath) == -1)
-        .Select(path => (relativePath: path, extension: Path.GetExtension(path)))
-        .Where(x => TargetExtensions.Contains(x.extension))
-        .Select(x => {
-            var type = FootageType.Image;
-            if (x.extension == ".mp4" || x.extension == ".mov") type = FootageType.Video;
-            return new FootageScrollViewData(x.relativePath, x.relativePath, x.relativePath.Substring(FootagePath.Length), type);
-        });
+            .Where(path => path.IndexOf(ThumbnailPath) == -1)
+            .Select(path => (relativePath: path, extension: Path.GetExtension(path)))
+            .Where(x => TargetExtensions.Contains(x.extension))
+            .Select(x =>
+            {
+                var type = FootageType.Image;
+                if (x.extension == ".mp4" || x.extension == ".mov") type = FootageType.Video;
+                return new FootageScrollViewData(x.relativePath, x.relativePath,
+                    x.relativePath.Substring(FootagePath.Length), type);
+            });
 
     /// <summary>
     /// ビルドに含まれるすべてのシーンパスを返す
     /// </summary>
     public IEnumerable<string> GetAllScenePathes() => Enumerable.Range(0, SceneManager.sceneCountInBuildSettings)
-        .Select(i => SceneUtility.GetScenePathByBuildIndex(i));
+        .Select(SceneUtility.GetScenePathByBuildIndex);
 
     /// <summary>
     /// 素材フォルダにある画像をテクスチャとして読み込む
@@ -64,7 +66,7 @@ public class FootageManager
         if (imageCache.ContainsKey(fileName))
         {
             // 読込完了 or 読み込み失敗 まで待つ
-            await UniTask.WaitUntil(() => !imageCache.ContainsKey(fileName) || imageCache[fileName] != null);
+            await UniTask.WaitUntil(() => !imageCache.ContainsKey(fileName) || imageCache[fileName] != null, cancellationToken: token);
             token.ThrowIfCancellationRequested();
             if (imageCache.ContainsKey(fileName))
                 return imageCache[fileName];
@@ -86,9 +88,11 @@ public class FootageManager
             }
             var tex = DownloadHandlerTexture.GetContent(uwr);
             imageCache[fileName] = tex;
-            try {
+            try
+            {
                 token.ThrowIfCancellationRequested();
-            } catch (OperationCanceledException){ }
+            }
+            catch (OperationCanceledException) { }
             return tex;
         }
     }

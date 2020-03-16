@@ -13,7 +13,8 @@ public class LayerManager
 {
     private readonly MainRenderer _mainRenderer;
     private readonly Dictionary<Layers, Scene> _loadedScenes = new Dictionary<Layers, Scene>();
-    private readonly Dictionary<Layers, SubSceneManager> _loadedSubSceneManagers = new Dictionary<Layers, SubSceneManager>();
+    private readonly Dictionary<Layers, SubSceneManager> _loadedSubSceneManagers =
+        new Dictionary<Layers, SubSceneManager>();
     private readonly Dictionary<Layers, bool> _isLocking = new Dictionary<Layers, bool>();
 
     /// <summary>
@@ -35,7 +36,8 @@ public class LayerManager
     public async UniTask LoadFootage(FootageScrollViewData data, Layers layer, Action<float> onUpdateTime = null)
     {
         // シーンの読み込みと初期化
-        switch(data.Type) {
+        switch (data.Type)
+        {
             case FootageType.Scene:
                 await loadSceneAsync(data.FootageName, layer);
                 break;
@@ -49,6 +51,8 @@ public class LayerManager
                 var imageSceneManager = _loadedSubSceneManagers[layer] as ImageSceneManager;
                 imageSceneManager.LoadImage(data.DisplayName);
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -86,10 +90,7 @@ public class LayerManager
         if (_isLocking.ContainsKey(layer)) return;
 
         // 既にシーンが読み込まれていたら破棄する
-        if (_loadedScenes.ContainsKey(layer))
-        {
-            await UnloadSceneAsync(layer);
-        }
+        if (_loadedScenes.ContainsKey(layer)) { await UnloadSceneAsync(layer); }
 
         // FIXME: うまいやり方
         switch (layer)
@@ -117,7 +118,8 @@ public class LayerManager
         // 処理中フラグを立てて読み込み開始
         _isLocking.Add(layer, true);
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        _loadedSubSceneManagers.Add(layer, _loadedScenes[layer].GetRootGameObjects()[0].GetComponent<SubSceneManager>());
+        _loadedSubSceneManagers.Add(layer,
+            _loadedScenes[layer].GetRootGameObjects()[0].GetComponent<SubSceneManager>());
     }
 
     public async UniTask UnloadSceneAsync(Layers layer)

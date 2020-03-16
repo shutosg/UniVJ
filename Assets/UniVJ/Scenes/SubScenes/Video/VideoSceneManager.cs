@@ -9,6 +9,7 @@ public class VideoSceneManager : SubSceneManager
 {
     /// <summary>playbackSpeed の変更を反映するまで待機するフレーム数</summary>
     private const int SpeedChangeWaitFrame = 10;
+
     [SerializeField] private VideoPlayer _frontVideo;
     [SerializeField] private VideoPlayer _backVideo;
 
@@ -36,27 +37,26 @@ public class VideoSceneManager : SubSceneManager
             _previousSpeeds[index.Value] = v;
             return;
         }
+
         for (var i = 0; i < _previousSpeeds.Length; i++)
-        {
             _previousSpeeds[i] = v;
-        }
     }
 
     private bool isWaited()
     {
         if (_previousSpeeds == null) return false;
         foreach (var s in _previousSpeeds)
-        {
-            if(!isSameValue(s, _currentSpeed)) return false;
-        }
+            if (!nearlyEquals(s, _currentSpeed))
+                return false;
+
         return true;
     }
 
-    private static bool isSameValue(float a, float b) => Math.Abs(a - b) <= 0.00001f;
-    
+    private static bool nearlyEquals(float a, float b) => Math.Abs(a - b) <= 0.00001f;
+
     private void LateUpdate()
     {
-        if (isSameValue(_frontVideo.playbackSpeed, _currentSpeed) || !isWaited()) return;
+        if (nearlyEquals(_frontVideo.playbackSpeed, _currentSpeed) || !isWaited()) return;
         _frontVideo.playbackSpeed = _currentSpeed;
         _backVideo.playbackSpeed = _currentSpeed;
     }
@@ -70,7 +70,7 @@ public class VideoSceneManager : SubSceneManager
         _frontVideo.time = targetTime;
         _backVideo.time = targetTime;
         await UniTask.WaitUntil(() => _frontVideo.time >= targetTime && _backVideo.time >= targetTime);
-        if(isPaused) await Pause();
+        if (isPaused) await Pause();
     }
 
     public async UniTask Pause()

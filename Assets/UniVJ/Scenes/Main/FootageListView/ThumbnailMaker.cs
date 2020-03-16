@@ -17,6 +17,7 @@ public class ThumbnailMaker
         public string FilePath { get; set; }
         public Action<Texture2D> OnMake { get; set; }
         public CancellationToken Token { get; set; }
+
         public TaskData(string filePath, Action<Texture2D> onMake, CancellationToken token)
         {
             FilePath = filePath;
@@ -24,6 +25,7 @@ public class ThumbnailMaker
             Token = token;
         }
     }
+
     private VideoSceneManager _videoSceneManager;
     private RenderTexture _renderTexture = new RenderTexture(768, 432, 0);
     private Queue<TaskData> _makeTasks = new Queue<TaskData>();
@@ -79,12 +81,14 @@ public class ThumbnailMaker
     {
         if (_hasStartedTask) return;
         _hasStartedTask = true;
-        while(_makeTasks.Count > 0)
+        while (_makeTasks.Count > 0)
         {
             var data = _makeTasks.Dequeue();
-            try {
+            try
+            {
                 await makeThumbnail(data.FilePath, data.OnMake, data.Token);
-            } catch (OperationCanceledException) { }
+            }
+            catch (OperationCanceledException) { }
         }
         await _layerManager.UnloadSceneAsync(Layers.ThumbnailMaker);
         _videoSceneManager = null;
@@ -119,10 +123,12 @@ public class ThumbnailMaker
         tex.ReadPixels(new Rect(0, 0, _renderTexture.width, _renderTexture.height), 0, 0);
         tex.Apply();
         RenderTexture.active = cachedRenderTexture;
+        // ディレクトリがなければ作成
+        var fileInfo = new FileInfo(FootageManager.ThumbnailPath + filePath.Remove(0, FootageManager.FootagePath.Length));
+        fileInfo.Directory?.Create();
         // 保存
-        (new FileInfo(FootageManager.ThumbnailPath + filePath.Remove(0, FootageManager.FootagePath.Length))).Directory.Create();
         var savePath = GetThumbnailPath(filePath);
-        System.IO.File.WriteAllBytes(savePath, tex.EncodeToPNG());
+        File.WriteAllBytes(savePath, tex.EncodeToPNG());
         token.ThrowIfCancellationRequested();
         onMake(tex);
     }

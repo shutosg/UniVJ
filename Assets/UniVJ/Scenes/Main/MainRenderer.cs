@@ -41,7 +41,7 @@ public class MainRenderer
     /// <param name="layer">割り当てるレイヤー</param>
     public void RegistorySubScene(SubSceneManager manager, Layers layer)
     {
-        if(layer < Layers.Layer1 || layer > Layers.Layer4) return;
+        if (layer < Layers.Layer1 || layer > Layers.Layer4) return;
         manager.Setup(_subSceneRenderTextures[(int)layer - (int)Layers.Layer1], layer);
     }
 

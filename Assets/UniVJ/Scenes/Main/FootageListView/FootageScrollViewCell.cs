@@ -24,10 +24,7 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
     void Start()
     {
         _button.onClick.AddListener(() => Context.OnCellClicked?.Invoke(Index));
-        _loadButton.onClick.AddListener(() => {
-            Context.OnCellClicked?.Invoke(Index);
-            Context.OnCellSelectClicked?.Invoke(Index);
-        });
+        _loadButton.onClick.AddListener(() => Context.OnCellClicked?.Invoke(Index));
     }
 
     public override void UpdateContent(FootageScrollViewData itemData)
@@ -62,7 +59,8 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
                 var path = data.FootagePath;
                 if (_thumbnailMaker.HasThumbnail(path))
                 {
-                    load(_thumbnailMaker.GetThumbnailPath(data.FootagePath).Remove(0, FootageManager.FootagePath.Length), cancellationTokenSource.Token).Forget();
+                    load(_thumbnailMaker.GetThumbnailPath(data.FootagePath).Remove(0, FootageManager.FootagePath.Length),
+                        cancellationTokenSource.Token).Forget();
                 }
                 else
                 {
@@ -78,10 +76,12 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
         // サムネイルを読み込む
         async UniTask load(string fileName, CancellationToken token)
         {
-            try {
+            try
+            {
                 var tex = await Context.FootageManager.LoadTexture(fileName, token);
                 onLoaded(tex);
-            } catch (OperationCanceledException) { }
+            }
+            catch (OperationCanceledException) { }
         }
 
         // サムネイルの読み込み完了後処理
@@ -93,4 +93,3 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
         }
     }
 }
-

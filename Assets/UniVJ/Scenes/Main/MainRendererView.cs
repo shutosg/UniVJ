@@ -43,14 +43,16 @@ public class MainRendererView : MonoBehaviour
     /// </summary>
     /// <param name="layer">対象のレイヤー</param>
     /// <param name="value">値</param>
-    public void SetBlendingSlider(Layers layer, float value) => _layerViews[layer - Layers.Layer1].SetBlendingSliderValue(Mathf.Clamp01(value));
+    public void SetBlendingSlider(Layers layer, float value) =>
+        _layerViews[layer - Layers.Layer1].SetBlendingSliderValue(Mathf.Clamp01(value));
 
     /// <summary>
     /// Seek のスライダを操作する
     /// </summary>
     /// <param name="layer">対象のレイヤー</param>
     /// <param name="value">値</param>
-    public void SetSeekSlider(Layers layer, float value) => _layerViews[layer - Layers.Layer1].SetSeekSliderValue(Mathf.Clamp01(value));
+    public void SetSeekSlider(Layers layer, float value) =>
+        _layerViews[layer - Layers.Layer1].SetSeekSliderValue(Mathf.Clamp01(value));
 
     public void UpdateLayerView(Layers layer, bool? isSelected = null, bool? showSeekBar = null, float? speed = null, float? attack = null)
         => _layerViews[layer - Layers.Layer1].UpdateUI(isSelected, showSeekBar, speed, attack);

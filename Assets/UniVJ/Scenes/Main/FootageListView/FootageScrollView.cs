@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using EasingCore;
 using FancyScrollView;
-
 using UniRx;
 using Zenject;
 
@@ -12,7 +11,6 @@ using Zenject;
 /// </summary>
 public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScrollViewContext>
 {
-
     class CellGroup : DefaultCellGroup { }
 
     [SerializeField] FootageScrollViewCell _cellPrefab;
@@ -28,12 +26,13 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
 
     protected override void Initialize()
     {
-        if(initialized) return;
+        if (initialized) return;
         initialized = true;
         base.Initialize();
         // 選択されてる状態でタップされたら読み込む
-        Context.OnCellClicked = i => {
-            if(Context.SelectedIndex != i) SelectCell(i);
+        Context.OnCellClicked = i =>
+        {
+            if (Context.SelectedIndex != i) SelectCell(i);
             else _onSelectData.OnNext(ItemsSource[i / startAxisCellCount][i % startAxisCellCount]);
         };
         Context.FootageManager = _footageManager;
@@ -60,7 +59,7 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
         var targetWidth = width / columnCount - startAxisSpacing * (columnCount - 1) / columnCount;
         cellSize = new Vector2(targetWidth, targetWidth * cellSize.y / cellSize.x);
         base.UpdateContents(items);
-        foreach(var group in pool)
+        foreach (var group in pool)
         {
             var cells = group.transform.GetComponentsInChildren<FootageScrollViewCell>();
             foreach (var cell in cells)

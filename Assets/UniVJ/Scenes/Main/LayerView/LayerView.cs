@@ -35,17 +35,16 @@ public class LayerView : MonoBehaviour
 
     public void UpdateUI(bool? isSelected = null, bool? showSeekBar = null, float? speed = null, float? attack = null)
     {
-        if(isSelected != null)
+        if (isSelected != null)
             _cursor.color = isSelected.Value ? Color.red : Color.gray;
 
-        if(showSeekBar != null)
+        if (showSeekBar != null)
             _seekBar.gameObject.SetActive(showSeekBar.Value);
 
         if (speed != null)
             _speed.SetText($"Speed: {speed.Value:F4}");
 
-        if(attack != null)
+        if (attack != null)
             _attack.SetText($"Speed: {attack.Value:F4}");
-
     }
 }
