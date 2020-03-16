@@ -55,6 +55,7 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
         switch (data.Type)
         {
             case FootageType.Scene:
+                _screenShot.color = new Color(0.8f, 0.25f, 1.0f, 1.0f);
                 break;
             case FootageType.Video:
                 // サムネイルがあれば読み込む、なければ作る
