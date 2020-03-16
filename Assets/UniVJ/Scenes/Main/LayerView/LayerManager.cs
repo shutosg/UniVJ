@@ -11,10 +11,10 @@ using UniRx.Async;
 /// </summary>
 public class LayerManager
 {
-    private MainRenderer _mainRenderer;
-    private Dictionary<Layers, Scene> loadedScenes = new Dictionary<Layers, Scene>();
-    private Dictionary<Layers, SubSceneManager> loadedSubSceneManagers = new Dictionary<Layers, SubSceneManager>();
-    private Dictionary<Layers, bool> isLocking = new Dictionary<Layers, bool>();
+    private readonly MainRenderer _mainRenderer;
+    private readonly Dictionary<Layers, Scene> _loadedScenes = new Dictionary<Layers, Scene>();
+    private readonly Dictionary<Layers, SubSceneManager> _loadedSubSceneManagers = new Dictionary<Layers, SubSceneManager>();
+    private readonly Dictionary<Layers, bool> _isLocking = new Dictionary<Layers, bool>();
 
     /// <summary>
     /// コンストラクタ
@@ -30,6 +30,7 @@ public class LayerManager
     /// </summary>
     /// <param name="data"></param>
     /// <param name="layer"></param>
+    /// <param name="onUpdateTime"></param>
     /// <returns></returns>
     public async UniTask LoadFootage(FootageScrollViewData data, Layers layer, Action<float> onUpdateTime = null)
     {
@@ -40,26 +41,38 @@ public class LayerManager
                 break;
             case FootageType.Video:
                 await loadSceneAsync("Video", layer);
-                var videoSceneManager = loadedSubSceneManagers[layer] as VideoSceneManager;
+                var videoSceneManager = _loadedSubSceneManagers[layer] as VideoSceneManager;
                 videoSceneManager.LoadVideo(data.FootagePath, onUpdateTime).Forget();
                 break;
             case FootageType.Image:
                 await loadSceneAsync("Image", layer);
-                var imageSceneManager = loadedSubSceneManagers[layer] as ImageSceneManager;
+                var imageSceneManager = _loadedSubSceneManagers[layer] as ImageSceneManager;
                 imageSceneManager.LoadImage(data.DisplayName);
                 break;
         }
     }
 
-    public void SetSeekValue(Layers layer, float value) => loadedSubSceneManagers[layer].SetSeekValue(value).Forget();
+    public void SetSeekValue(Layers layer, float value) => _loadedSubSceneManagers[layer].SetSeekValue(value).Forget();
+
+    public void SendAttack(Layers layer, float value)
+    {
+        if (!_loadedSubSceneManagers.ContainsKey((layer))) return;
+        _loadedSubSceneManagers[layer].OnReceiveAttack(value);
+    }
+
+    public void SendSpeed(Layers layer, float value)
+    {
+        if (!_loadedSubSceneManagers.ContainsKey((layer))) return;
+        _loadedSubSceneManagers[layer].OnReceiveSpeed(value);
+    }
 
     public async UniTask<VideoSceneManager> LoadThumbnailMakerScene()
     {
-        if (!loadedSubSceneManagers.ContainsKey(Layers.ThumbnailMaker))
+        if (!_loadedSubSceneManagers.ContainsKey(Layers.ThumbnailMaker))
         {
             await loadSceneAsync("video", Layers.ThumbnailMaker);
         }
-        return loadedSubSceneManagers[Layers.ThumbnailMaker] as VideoSceneManager;
+        return _loadedSubSceneManagers[Layers.ThumbnailMaker] as VideoSceneManager;
     }
 
     /// <summary>
@@ -70,10 +83,10 @@ public class LayerManager
     private async UniTask loadSceneAsync(string sceneName, Layers layer)
     {
         // 対象のレイヤーが処理中なら無視
-        if (isLocking.ContainsKey(layer)) return;
+        if (_isLocking.ContainsKey(layer)) return;
 
         // 既にシーンが読み込まれていたら破棄する
-        if (loadedScenes.ContainsKey(layer))
+        if (_loadedScenes.ContainsKey(layer))
         {
             await UnloadSceneAsync(layer);
         }
@@ -102,59 +115,59 @@ public class LayerManager
         }
 
         // 処理中フラグを立てて読み込み開始
-        isLocking.Add(layer, true);
+        _isLocking.Add(layer, true);
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        loadedSubSceneManagers.Add(layer, loadedScenes[layer].GetRootGameObjects()[0].GetComponent<SubSceneManager>());
+        _loadedSubSceneManagers.Add(layer, _loadedScenes[layer].GetRootGameObjects()[0].GetComponent<SubSceneManager>());
     }
 
     public async UniTask UnloadSceneAsync(Layers layer)
     {
         // 処理中 or そもそも読み込まれていないなら無視
-        if (isLocking.ContainsKey(layer) || !loadedScenes.ContainsKey(layer)) return;
+        if (_isLocking.ContainsKey(layer) || !_loadedScenes.ContainsKey(layer)) return;
 
-        isLocking.Add(layer, true);
-        await SceneManager.UnloadSceneAsync(loadedScenes[layer]);
-        isLocking.Remove(layer);
-        loadedScenes.Remove(layer);
-        loadedSubSceneManagers.Remove(layer);
+        _isLocking.Add(layer, true);
+        await SceneManager.UnloadSceneAsync(_loadedScenes[layer]);
+        _isLocking.Remove(layer);
+        _loadedScenes.Remove(layer);
+        _loadedSubSceneManagers.Remove(layer);
     }
 
     private void onLoadedSceneAsLayer1(Scene scene, LoadSceneMode mode)
     {
-        isLocking.Remove(Layers.Layer1);
-        loadedScenes.Add(Layers.Layer1, scene);
+        _isLocking.Remove(Layers.Layer1);
+        _loadedScenes.Add(Layers.Layer1, scene);
         setLayer(scene, Layers.Layer1);
         SceneManager.sceneLoaded -= onLoadedSceneAsLayer1;
     }
 
     private void onLoadedSceneAsLayer2(Scene scene, LoadSceneMode mode)
     {
-        isLocking.Remove(Layers.Layer2);
-        loadedScenes.Add(Layers.Layer2, scene);
+        _isLocking.Remove(Layers.Layer2);
+        _loadedScenes.Add(Layers.Layer2, scene);
         setLayer(scene, Layers.Layer2);
         SceneManager.sceneLoaded -= onLoadedSceneAsLayer2;
     }
 
     private void onLoadedSceneAsLayer3(Scene scene, LoadSceneMode mode)
     {
-        isLocking.Remove(Layers.Layer3);
-        loadedScenes.Add(Layers.Layer3, scene);
+        _isLocking.Remove(Layers.Layer3);
+        _loadedScenes.Add(Layers.Layer3, scene);
         setLayer(scene, Layers.Layer3);
         SceneManager.sceneLoaded -= onLoadedSceneAsLayer3;
     }
 
     private void onLoadedSceneAsLayer4(Scene scene, LoadSceneMode mode)
     {
-        isLocking.Remove(Layers.Layer4);
-        loadedScenes.Add(Layers.Layer4, scene);
+        _isLocking.Remove(Layers.Layer4);
+        _loadedScenes.Add(Layers.Layer4, scene);
         setLayer(scene, Layers.Layer4);
         SceneManager.sceneLoaded -= onLoadedSceneAsLayer4;
     }
 
     private void onLoadedSceneAsThumbnailMaker(Scene scene, LoadSceneMode mode)
     {
-        isLocking.Remove(Layers.ThumbnailMaker);
-        loadedScenes.Add(Layers.ThumbnailMaker, scene);
+        _isLocking.Remove(Layers.ThumbnailMaker);
+        _loadedScenes.Add(Layers.ThumbnailMaker, scene);
         setLayer(scene, Layers.ThumbnailMaker);
         SceneManager.sceneLoaded -= onLoadedSceneAsThumbnailMaker;
     }

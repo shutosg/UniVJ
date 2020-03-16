@@ -45,6 +45,12 @@ public class VideoSceneManager : SubSceneManager
         await UniTask.WaitUntil(() => _frontVideo.isPaused && _backVideo.isPaused);
     }
 
+    public override void OnReceiveSpeed(float value)
+    {
+        _frontVideo.playbackSpeed = value;
+        _backVideo.playbackSpeed = value;
+    }
+
     void Update()
     {
         _onUpdateTime?.Invoke((float)(_frontVideo.time / _frontVideo.length));

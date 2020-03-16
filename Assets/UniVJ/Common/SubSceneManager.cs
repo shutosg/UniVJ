@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UniRx.Async;
 
 public class SubSceneManager : MonoBehaviour
@@ -17,7 +16,7 @@ public class SubSceneManager : MonoBehaviour
     /// </summary>
     /// <param name="targetTexture">描画先のテクスチャ</param>
     /// <param name="layer">このシーンのレイヤー</param>
-    public void Setup(RenderTexture targetTexture, Layers layer)
+    public virtual void Setup(RenderTexture targetTexture, Layers layer)
     {
         _targetTexture = targetTexture;
         _renderMaterial = new Material(_postEffectShader);
@@ -25,7 +24,7 @@ public class SubSceneManager : MonoBehaviour
 
         // レイヤーを設定
         _sceneCamera.cullingMask = layer.ToFlagInt();
-        foreach(var l in _sceneLights)
+        foreach (var l in _sceneLights)
         {
             l.cullingMask = layer.ToFlagInt();
         }
@@ -33,9 +32,15 @@ public class SubSceneManager : MonoBehaviour
 
     void OnRenderImage(RenderTexture src, RenderTexture dst)
     {
-        if(_renderMaterial == null) return;
+        if (_renderMaterial == null) return;
         Graphics.Blit(src, _targetTexture, _renderMaterial);
     }
 
-    public virtual async UniTask SetSeekValue(float value) { }
+    public virtual async UniTask SetSeekValue(float value)
+    {
+        await UniTask.Yield();
+    }
+
+    public virtual void OnReceiveAttack(float value) { }
+    public virtual void OnReceiveSpeed(float value) { }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UniRx;
 using Zenject;
 
@@ -9,10 +10,10 @@ using Zenject;
 /// </summary>
 public class ControlPanel : MonoBehaviour
 {
-    [Inject] MainRendererView _rendererView;
-    [Inject] FootageListView _footageListView;
-    [Inject] LayerManager _layerManager;
-    [Inject] FootageManager _footageManager;
+    [Inject] private MainRendererView _rendererView;
+    [Inject] private FootageListView _footageListView;
+    [Inject] private LayerManager _layerManager;
+    [Inject] private FootageManager _footageManager;
 
     public void Initialize()
     {
@@ -27,8 +28,23 @@ public class ControlPanel : MonoBehaviour
             var isVideo = data.Type == FootageType.Video;
             if (isVideo) onUpdateTime = value => _rendererView.SetSeekSlider(selectedLayer, value);
             await _layerManager.LoadFootage(data, selectedLayer, onUpdateTime);
-            _rendererView.UpdateLayerView(selectedLayer, showSeekBar: isVideo);
+            _rendererView.UpdateLayerView(selectedLayer, showSeekBar: isVideo, speed: 1f, attack: 0f);
             _rendererView.SetSeekSlider(selectedLayer, 0);
         });
     }
+
+    public void SendAttack(float value)
+    {
+        _rendererView.UpdateLayerView(_rendererView.SelectedLayer, attack: value);
+        _layerManager.SendAttack(_rendererView.SelectedLayer, value);
+    }
+
+    public void SendSpeed(Layers layer, InputAction.CallbackContext context)
+    {
+        var speed = Mathf.Lerp(0, 5, context.ReadValue<float>());
+        _rendererView.UpdateLayerView(layer, speed: speed);
+        _layerManager.SendSpeed(layer, speed);
+    }
+
+    public void SetBlendingFactor(Layers layer, float value) => _rendererView.SetBlendingSlider(layer, value);
 }

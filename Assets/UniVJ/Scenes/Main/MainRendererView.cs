@@ -16,7 +16,7 @@ public class MainRendererView : MonoBehaviour
     public IReadOnlyList<IObservable<float>> OnChangeBlendingValues { get; private set; }
     public IReadOnlyList<IObservable<float>> OnChangeSeekValues { get; private set; }
     public Layers SelectedLayer => _selectedLayer.Value;
-    private ReactiveProperty<Layers> _selectedLayer = new ReactiveProperty<Layers>(Layers.Layer1);
+    private readonly ReactiveProperty<Layers> _selectedLayer = new ReactiveProperty<Layers>(Layers.Layer1);
 
     /// <summary>
     /// 初期化
@@ -52,5 +52,6 @@ public class MainRendererView : MonoBehaviour
     /// <param name="value">値</param>
     public void SetSeekSlider(Layers layer, float value) => _layerViews[layer - Layers.Layer1].SetSeekSliderValue(Mathf.Clamp01(value));
 
-    public void UpdateLayerView(Layers layer, bool? isSelected = null, bool? showSeekBar = null) => _layerViews[layer - Layers.Layer1].UpdateUI(isSelected, showSeekBar);
+    public void UpdateLayerView(Layers layer, bool? isSelected = null, bool? showSeekBar = null, float? speed = null, float? attack = null)
+        => _layerViews[layer - Layers.Layer1].UpdateUI(isSelected, showSeekBar, speed, attack);
 }

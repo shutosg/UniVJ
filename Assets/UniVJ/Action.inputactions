@@ -1,0 +1,185 @@
+{
+    "name": "Action",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "d1e6d237-683e-4a37-9b52-28d7db012feb",
+            "actions": [
+                {
+                    "name": "Transparency1",
+                    "type": "Value",
+                    "id": "8b302aeb-3bf2-4e7b-8fa0-bc07516c59c8",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Speed1",
+                    "type": "Value",
+                    "id": "ef78e1f0-9a65-425b-bc50-a38c5d84bab0",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Transparency2",
+                    "type": "Value",
+                    "id": "1c4084ad-99e0-45f2-9fa0-f106996cfa34",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Speed2",
+                    "type": "Value",
+                    "id": "7b6b77f3-f45c-4378-9f30-c114f78a622a",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Transparency3",
+                    "type": "Value",
+                    "id": "5d426de6-e06c-42c9-8851-ee5acf08d76c",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Speed3",
+                    "type": "Value",
+                    "id": "b88ac02a-0e04-4f62-b7e9-75524cce3eb2",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Transparency4",
+                    "type": "Value",
+                    "id": "ca97447a-af4a-4c20-97fa-38b09e33c586",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Speed4",
+                    "type": "Value",
+                    "id": "84e93048-25da-47f4-bd19-dd861cb9eea8",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Attack",
+                    "type": "Value",
+                    "id": "edf0206d-9e98-4b1c-a5bd-54dd0f752355",
+                    "expectedControlType": "MidiValue",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f1feb2c4-1dd3-4639-90ea-5463f067d620",
+                    "path": "<MidiDevice>/control000",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Transparency1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b46f9db-e111-42df-b947-a0a3c0853b96",
+                    "path": "<MidiDevice>/control001",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Transparency2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86ae639d-4912-43bd-888e-472a16919f8f",
+                    "path": "<MidiDevice>/control002",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Transparency3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7aedb796-94f2-429d-a67c-3a2b4033eab1",
+                    "path": "<MidiDevice>/control016",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Speed1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7dd025dc-e1e3-4f41-8564-1d6b8b46cdc0",
+                    "path": "<MidiDevice>/control017",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Speed2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abed9fda-e7e3-4c5a-b42d-468ee41d574c",
+                    "path": "<MidiDevice>/control018",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Speed3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b1787d3-fd42-4158-8c07-5a2ef9ccaefc",
+                    "path": "<MidiDevice>/control003",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Transparency4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7132f774-35c4-42dd-800f-16bd40dcd1fc",
+                    "path": "<MidiDevice>/control019",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Speed4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0bc8cda-0b89-4880-a882-e42c4cc53130",
+                    "path": "<MidiDevice>/control004",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
