@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MidiJack;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MidiInputBinder : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MidiInputBinder : MonoBehaviour
     private readonly Dictionary<int, float> _previousValues = new Dictionary<int, float>();
 
     private bool _isInitialized;
+    [SerializeField] private FloatEventDictionary _events;
 
     /// <summary>
     /// 初期化
@@ -45,7 +47,13 @@ public class MidiInputBinder : MonoBehaviour
             var value = MidiMaster.GetKnob(knobNumber);
             if (!(Math.Abs(_previousValues[knobNumber] - value) > Tolerance)) continue;
             _previousValues[knobNumber] = value;
-            Debug.Log(knobNumber + ": " + value);
+            // Inspector で登録されてなければ無視
+            if (!_events.ContainsKey(knobNumber)) continue;
+            _events[knobNumber].Invoke(value);
         }
     }
 }
+
+[Serializable] public class UnityEventFloat : UnityEvent<float> { }
+
+[Serializable] public class FloatEventDictionary : SerializableDictionary<int, UnityEventFloat> { }

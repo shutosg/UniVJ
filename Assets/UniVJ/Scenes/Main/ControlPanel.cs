@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UniRx;
 using Zenject;
 
@@ -40,9 +39,9 @@ public class ControlPanel : MonoBehaviour
         _layerManager.SendAttack(_rendererView.SelectedLayer, value);
     }
 
-    public void SendSpeed(Layers layer, InputAction.CallbackContext context)
+    public void SendSpeed(Layers layer, float value)
     {
-        var speed = Mathf.Lerp(0, 5, context.ReadValue<float>());
+        var speed = Mathf.Lerp(0, 5, value);
         _rendererView.UpdateLayerView(layer, speed: speed);
         _layerManager.SendSpeed(layer, speed);
     }

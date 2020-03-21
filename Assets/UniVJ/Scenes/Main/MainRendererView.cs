@@ -56,4 +56,6 @@ public class MainRendererView : MonoBehaviour
 
     public void UpdateLayerView(Layers layer, bool? isSelected = null, bool? showSeekBar = null, float? speed = null, float? attack = null)
         => _layerViews[layer - Layers.Layer1].UpdateUI(isSelected, showSeekBar, speed, attack);
+
+    public void SetSelectedLayer(Layers layer) => _selectedLayer.Value = layer;
 }
