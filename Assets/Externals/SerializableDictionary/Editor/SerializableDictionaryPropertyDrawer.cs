@@ -261,6 +261,10 @@ public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 
 		float valuePropertyHeight = EditorGUI.GetPropertyHeight(valueProperty);
 		var valuePosition = linePosition;
+        if (valueProperty.propertyType == SerializedPropertyType.Generic)
+        {
+            valuePosition.y += keyPropertyHeight;
+        }
 		valuePosition.height = valuePropertyHeight;
 		EditorGUI.PropertyField(valuePosition, valueProperty, GUIContent.none, true);
 
