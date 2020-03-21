@@ -1,6 +1,13 @@
 {
   "scopedRegistries": [
     {
+      "name": "Unity NuGet",
+      "url": "https://unitynuget-registry.azurewebsites.net",
+      "scopes": [
+        "org.nuget"
+      ]
+    },
+    {
       "name": "Keijiro",
       "url": "https://registry.npmjs.com",
       "scopes": [
@@ -14,11 +21,13 @@
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.0",
     "com.unity.inputsystem": "1.0.0-preview.6",
+    "com.unity.render-pipelines.high-definition": "7.1.8",
     "com.unity.test-framework": "1.1.11",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.2.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualeffectgraph": "7.1.8",
+    "jp.keijiro.lasp": "2.0.0",
     "jp.keijiro.minis": "1.0.6",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
