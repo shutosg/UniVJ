@@ -42,9 +42,9 @@ public class LayerView : MonoBehaviour
             _seekBar.gameObject.SetActive(showSeekBar.Value);
 
         if (speed != null)
-            _speed.SetText($"Speed: {speed.Value:F4}");
+            _speed.SetText("Speed: {0:4}", speed.Value);
 
         if (attack != null)
-            _attack.SetText($"Speed: {attack.Value:F4}");
+            _attack.SetText("Attack: {0:4}", attack.Value);
     }
 }
