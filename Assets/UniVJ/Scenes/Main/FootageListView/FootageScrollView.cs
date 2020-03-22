@@ -76,7 +76,6 @@ public class FootageScrollView : FancyGridView<FootageScrollViewData, FootageScr
         if (DataCount == 0 || !isValid(index)) return;
 
         UpdateSelection(index);
-        ScrollTo(index, 0.2f, Ease.OutQuint);
     }
 
     private bool isValid(int index) => index >= 0 && index < DataCount;
