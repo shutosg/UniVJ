@@ -70,6 +70,12 @@ public class LayerManager
         _loadedSubSceneManagers[layer].OnReceiveSpeed(value);
     }
 
+    public void SendVariable(Layers layer, SubSceneVariable variable, float value)
+    {
+        if (!_loadedSubSceneManagers.ContainsKey((layer))) return;
+        _loadedSubSceneManagers[layer].OnReceiveVariable(variable, value);
+    }
+
     public async UniTask<VideoSceneManager> LoadThumbnailMakerScene()
     {
         if (!_loadedSubSceneManagers.ContainsKey(Layers.ThumbnailMaker))

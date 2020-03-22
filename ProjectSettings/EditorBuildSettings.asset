@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UniVJ/Scenes/SubScenes/VFXRing/VFXRing.unity
     guid: b4560713f6cd94b918265f3105d05e08
+  - enabled: 1
+    path: Assets/UniVJ/Scenes/SubScenes/ParticleTunnel/ParticlesTunnel.unity
+    guid: 4c618497eaa6f43c5b623f5a58d79733
   m_configObjects: {}

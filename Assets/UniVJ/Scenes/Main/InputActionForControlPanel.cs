@@ -37,5 +37,9 @@ public class InputActionForControlPanel : MonoBehaviour
     public void SetBlendingFactor2(float value) => _controlPanel.SetBlendingFactor(Layers.Layer2, value);
     public void SetBlendingFactor3(float value) => _controlPanel.SetBlendingFactor(Layers.Layer3, value);
     public void SetBlendingFactor4(float value) => _controlPanel.SetBlendingFactor(Layers.Layer4, value);
+    public void SendVariable1(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable1, value);
+    public void SendVariable2(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable2, value);
+    public void SendVariable3(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable3, value);
+    public void SendVariable4(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable4, value);
     #endregion
 }

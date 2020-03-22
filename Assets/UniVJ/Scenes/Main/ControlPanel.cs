@@ -46,5 +46,10 @@ public class ControlPanel : MonoBehaviour
         _layerManager.SendSpeed(layer, speed);
     }
 
+    public void SendVariable(SubSceneVariable variable, float value)
+    {
+        _layerManager.SendVariable(_rendererView.SelectedLayer, variable, value);
+    }
+
     public void SetBlendingFactor(Layers layer, float value) => _rendererView.SetBlendingSlider(layer, value);
 }
