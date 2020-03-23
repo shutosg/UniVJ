@@ -20,7 +20,7 @@ public class MainRenderer
     public MainRenderer(MainRendererView view, Shader mixShader, Vector2Int resolution)
     {
         _mixMaterial = new Material(mixShader);
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < 8; i++)
         {
             var rt = new RenderTexture(resolution.x, resolution.y, 0);
             _subSceneRenderTextures.Add(rt);
@@ -41,7 +41,7 @@ public class MainRenderer
     /// <param name="layer">割り当てるレイヤー</param>
     public void RegistorySubScene(SubSceneManager manager, Layers layer)
     {
-        if (layer < Layers.Layer1 || layer > Layers.Layer4) return;
+        if (layer < Layers.Layer1 || layer > Layers.Layer7) return;
         manager.Setup(_subSceneRenderTextures[(int)layer - (int)Layers.Layer1], layer);
     }
 

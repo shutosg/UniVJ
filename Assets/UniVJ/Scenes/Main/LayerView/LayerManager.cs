@@ -113,6 +113,15 @@ public class LayerManager
             case Layers.Layer4:
                 SceneManager.sceneLoaded += onLoadedSceneAsLayer4;
                 break;
+            case Layers.Layer5:
+                SceneManager.sceneLoaded += onLoadedSceneAsLayer5;
+                break;
+            case Layers.Layer6:
+                SceneManager.sceneLoaded += onLoadedSceneAsLayer6;
+                break;
+            case Layers.Layer7:
+                SceneManager.sceneLoaded += onLoadedSceneAsLayer7;
+                break;
             case Layers.ThumbnailMaker:
                 SceneManager.sceneLoaded += onLoadedSceneAsThumbnailMaker;
                 break;
@@ -170,6 +179,30 @@ public class LayerManager
         _loadedScenes.Add(Layers.Layer4, scene);
         setLayer(scene, Layers.Layer4);
         SceneManager.sceneLoaded -= onLoadedSceneAsLayer4;
+    }
+
+    private void onLoadedSceneAsLayer5(Scene scene, LoadSceneMode mode)
+    {
+        _isLocking.Remove(Layers.Layer5);
+        _loadedScenes.Add(Layers.Layer5, scene);
+        setLayer(scene, Layers.Layer5);
+        SceneManager.sceneLoaded -= onLoadedSceneAsLayer5;
+    }
+
+    private void onLoadedSceneAsLayer6(Scene scene, LoadSceneMode mode)
+    {
+        _isLocking.Remove(Layers.Layer6);
+        _loadedScenes.Add(Layers.Layer6, scene);
+        setLayer(scene, Layers.Layer6);
+        SceneManager.sceneLoaded -= onLoadedSceneAsLayer6;
+    }
+
+    private void onLoadedSceneAsLayer7(Scene scene, LoadSceneMode mode)
+    {
+        _isLocking.Remove(Layers.Layer7);
+        _loadedScenes.Add(Layers.Layer7, scene);
+        setLayer(scene, Layers.Layer7);
+        SceneManager.sceneLoaded -= onLoadedSceneAsLayer7;
     }
 
     private void onLoadedSceneAsThumbnailMaker(Scene scene, LoadSceneMode mode)

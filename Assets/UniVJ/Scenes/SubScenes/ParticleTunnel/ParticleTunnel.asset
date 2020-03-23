@@ -23,12 +23,12 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.91
+    m_Value: 0.907
     min: 0
     max: 1
   scatter:
     m_OverrideState: 1
-    m_Value: 0.932
+    m_Value: 0.873
     min: 0
     max: 1
   tint:
@@ -75,7 +75,7 @@ MonoBehaviour:
     m_Value: {fileID: 0}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.138
+    m_Value: 0.451
     min: 0
     max: 1
   m_MaxSamples:
@@ -99,20 +99,20 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 3
   toeStrength:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.213
     min: 0
     max: 1
   toeLength:
-    m_OverrideState: 0
-    m_Value: 0.5
+    m_OverrideState: 1
+    m_Value: 0.789
     min: 0
     max: 1
   shoulderStrength:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.628
     min: 0
     max: 1
   shoulderLength:
@@ -125,8 +125,8 @@ MonoBehaviour:
     min: 0
     max: 1
   gamma:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 1.04
     min: 0.001
   lutTexture:
     m_OverrideState: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 1.9
+    m_Value: 2.23
   contrast:
     m_OverrideState: 0
     m_Value: 0
