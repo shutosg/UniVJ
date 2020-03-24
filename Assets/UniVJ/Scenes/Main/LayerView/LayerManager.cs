@@ -13,8 +13,7 @@ public class LayerManager
 {
     private readonly MainRenderer _mainRenderer;
     private readonly Dictionary<Layers, Scene> _loadedScenes = new Dictionary<Layers, Scene>();
-    private readonly Dictionary<Layers, SubSceneManager> _loadedSubSceneManagers =
-        new Dictionary<Layers, SubSceneManager>();
+    private readonly Dictionary<Layers, SubSceneManager> _loadedSubSceneManagers = new Dictionary<Layers, SubSceneManager>();
     private readonly Dictionary<Layers, bool> _isLocking = new Dictionary<Layers, bool>();
 
     /// <summary>
