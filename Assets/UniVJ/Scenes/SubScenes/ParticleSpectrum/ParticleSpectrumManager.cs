@@ -16,7 +16,6 @@ public class ParticleSpectrumManager : SubSceneManager
     void Awake()
     {
         _turbulencePowerId = Shader.PropertyToID("TurbulencePower");
-        // Setup(null, Layers.Default);
     }
 
     public override void Setup(RenderTexture targetTexture, Layers layer)
