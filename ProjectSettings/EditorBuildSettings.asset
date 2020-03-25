@@ -27,6 +27,6 @@ EditorBuildSettings:
     path: Assets/UniVJ/Scenes/SubScenes/ParticleTunnel/ParticlesTunnel.unity
     guid: 4c618497eaa6f43c5b623f5a58d79733
   - enabled: 1
-    path: Assets/UniVJ/Scenes/SubScenes/ParticleSpectrum/ParticleSpectrum.unity
+    path: Assets/UniVJ/Scenes/SubScenes/ParticleWave/ParticleWave.unity
     guid: b5525508c26ff4712a149ca7b138df6b
   m_configObjects: {}
