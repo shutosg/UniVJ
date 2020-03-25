@@ -7,7 +7,6 @@ public class MainInstaller : MonoInstaller
     [SerializeField] private Shader _mainRendererShader;
     [SerializeField] private MainRendererView _rendererView;
     [SerializeField] private FootageListView _footageListView;
-    [SerializeField] private ControlPanel _controlPanel;
 
     public override void InstallBindings()
     {
@@ -16,5 +15,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<FootageListView>().FromInstance(_footageListView).AsSingle().NonLazy();
         Container.Bind<LayerManager>().AsSingle().NonLazy();
         Container.Bind<ThumbnailMaker>().AsSingle().NonLazy();
+        Container.Bind<ISubSceneControllerResolver>().To<SubSceneControllerResolver>().AsSingle().NonLazy();
     }
 }

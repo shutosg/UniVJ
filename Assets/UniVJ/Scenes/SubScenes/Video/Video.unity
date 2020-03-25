@@ -256,7 +256,7 @@ MonoBehaviour:
       enableBigTilePrepass: 0
       isFptlEnabled: 0
   clearColorMode: 1
-  backgroundColorHDR: {r: 0, g: 0, b: 0, a: 0}
+  backgroundColorHDR: {r: 0, g: 0, b: 0, a: 1}
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
@@ -346,6 +346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4640af4a21a498aa05eb16c0cfd7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <SubSceneController>k__BackingField: {fileID: 7613820472092874707, guid: 5a504a981cff74fb9be33da5b598d546,
+    type: 3}
   _sceneCamera: {fileID: 207770434}
   _sceneLights: []
   _postEffectShader: {fileID: 4800000, guid: a185389042bd84d99a902826de1c1daf, type: 3}

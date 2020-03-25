@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx.Async;
 using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.SceneManagement;
 
 public class SubSceneManager : MonoBehaviour
 {
     [SerializeField] private Camera _sceneCamera;
     [SerializeField] private Light[] _sceneLights;
-    private RenderTexture _targetTexture;
     [SerializeField] private Shader _postEffectShader;
+    private RenderTexture _targetTexture;
     private Material _renderMaterial;
     protected int _speedId;
 

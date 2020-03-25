@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using UniRx.Async;
 
 public class ImageSceneManager : SubSceneManager
 {
@@ -12,7 +13,7 @@ public class ImageSceneManager : SubSceneManager
 
     [Inject] FootageManager _footageManager;
 
-    public async void LoadImage(string fileName)
+    public async UniTask LoadImage(string fileName)
     {
         var tex = await _footageManager.LoadTexture(fileName);
         _frontImage.texture = tex;

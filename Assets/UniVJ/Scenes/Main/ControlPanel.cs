@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UniRx;
+using UniRx.Async;
 using Zenject;
 
 /// <summary>
@@ -9,10 +10,13 @@ using Zenject;
 /// </summary>
 public class ControlPanel : MonoBehaviour
 {
+    [SerializeField] private Transform _subSceneControllerParent;
     [Inject] private MainRendererView _rendererView;
     [Inject] private FootageListView _footageListView;
     [Inject] private LayerManager _layerManager;
     [Inject] private FootageManager _footageManager;
+
+    [SerializeField] private VideoSceneController prefab;
 
     public void Initialize()
     {
@@ -24,12 +28,17 @@ public class ControlPanel : MonoBehaviour
         _footageListView.OnSelectData.Subscribe(async data =>
         {
             var selectedLayer = _rendererView.SelectedLayer;
-            Action<float> onUpdateTime = null;
+            Action<VideoSceneManager.FrameInfo> onUpdateTime = null;
             var isVideo = data.Type == FootageType.Video;
-            if (isVideo) onUpdateTime = value => _rendererView.SetSeekSlider(selectedLayer, value);
-            await _layerManager.LoadFootage(data, selectedLayer, onUpdateTime);
+            if (isVideo) onUpdateTime = info => _rendererView.SetSeekSlider(selectedLayer, info.Rate);
+            // 読み込み
+            var subSceneController = await _layerManager.LoadFootage(data, selectedLayer, onUpdateTime);
             _rendererView.UpdateLayerView(selectedLayer, showSeekBar: isVideo, speed: 1f, attack: 0f);
             _rendererView.SetSeekSlider(selectedLayer, 0);
+            // シーンのコントローラをinstantiateして配置
+            if (subSceneController != null) subSceneController.transform.SetParent(_subSceneControllerParent, worldPositionStays: false);
+            // selectedLayer が変わったら表示も変える
+            _rendererView.ObservableSelectedLayer.Subscribe(layer => _layerManager.ShowSubSceneController(layer).Forget());
         });
     }
 
@@ -52,4 +61,6 @@ public class ControlPanel : MonoBehaviour
     }
 
     public void SetBlendingFactor(Layers layer, float value) => _rendererView.SetBlendingSlider(layer, value);
+
+    public void UnloadSelectedScene() => _layerManager.UnloadSceneAsync(_rendererView.SelectedLayer).Forget();
 }

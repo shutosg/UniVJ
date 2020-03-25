@@ -12,9 +12,11 @@ using UniRx;
 public class MainRendererView : MonoBehaviour
 {
     [SerializeField] private RawImage[] _mainImages;
+    [SerializeField] private RawImage[] _selectedImages;
     [SerializeField] private LayerView[] _layerViews;
     public IReadOnlyList<IObservable<float>> OnChangeBlendingValues { get; private set; }
     public IReadOnlyList<IObservable<float>> OnChangeSeekValues { get; private set; }
+    public IObservable<Layers> ObservableSelectedLayer => _selectedLayer;
     public Layers SelectedLayer => _selectedLayer.Value;
     private readonly ReactiveProperty<Layers> _selectedLayer = new ReactiveProperty<Layers>(Layers.Layer1);
 
@@ -34,6 +36,13 @@ public class MainRendererView : MonoBehaviour
             var index = i;
             _selectedLayer.Subscribe(l => _layerViews[index].UpdateUI(isSelected: layer == l));
         }
+        _selectedLayer.Subscribe(layer =>
+        {
+            foreach (var image in _selectedImages)
+            {
+                image.texture = layerTextures[layer - Layers.Layer1];
+            }
+        });
         OnChangeBlendingValues = _layerViews.Select(v => v.OnChangeBlendingSliderValue).ToList();
         OnChangeSeekValues = _layerViews.Select(v => v.OnChangeSeekSliderValue).ToList();
     }

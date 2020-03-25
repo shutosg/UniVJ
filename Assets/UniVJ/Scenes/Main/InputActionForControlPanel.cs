@@ -41,5 +41,6 @@ public class InputActionForControlPanel : MonoBehaviour
     public void SendVariable2(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable2, value);
     public void SendVariable3(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable3, value);
     public void SendVariable4(float value) => _controlPanel.SendVariable(SubSceneVariable.Variable4, value);
+    public void UnLoadSelectedScene() => _controlPanel.UnloadSelectedScene();
     #endregion
 }
