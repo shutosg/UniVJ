@@ -246,6 +246,9 @@ VisualEffect:
       - m_Value: 0.319149
         m_Name: Flequency
         m_Overridden: 1
+      - m_Value: 0.319149
+        m_Name: Frequency
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -564,13 +567,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281590522}
-  m_LocalRotation: {x: 0.19757177, y: 0, z: 0, w: 0.9802884}
+  m_LocalRotation: {x: 0.17966075, y: 0, z: 0, w: 0.9837287}
   m_LocalPosition: {x: 0, y: 4.3, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1456357808}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 22.79, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20.7, y: 0, z: 0}
 --- !u!114 &1281590526
 MonoBehaviour:
   m_ObjectHideFlags: 0

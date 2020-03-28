@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 4534730700452808064}
   - component: {fileID: 963216105156491728}
   m_Layer: 5
-  m_Name: ParticleWave
+  m_Name: ParticleTunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6688162903883337874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1103cd2dfd6840a3b31c7342f58eecf, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ae4050b354214ec8a3c68315d814000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _footagePath: {fileID: 4429663204861581395}
@@ -281,7 +281,7 @@ PrefabInstance:
     - target: {fileID: 3144798709616175938, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
       propertyPath: m_text
-      value: Frequency
+      value: Turblence
       objectReference: {fileID: 0}
     - target: {fileID: 3323962644408606999, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
@@ -296,12 +296,7 @@ PrefabInstance:
     - target: {fileID: 3828326153241326019, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
       propertyPath: m_Name
-      value: SliderFrequency
-      objectReference: {fileID: 0}
-    - target: {fileID: 4105800091211427397, guid: 5c719081814bb4b1195d1886bab3a09d,
-        type: 3}
-      propertyPath: m_Spacing
-      value: 34.2
+      value: SliderTurb
       objectReference: {fileID: 0}
     - target: {fileID: 4477381898890615902, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
@@ -436,7 +431,7 @@ PrefabInstance:
     - target: {fileID: 4888911784614370836, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
       propertyPath: m_Name
-      value: SliderHue
+      value: SliderAmpOffset
       objectReference: {fileID: 0}
     - target: {fileID: 5249734929188909961, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
@@ -501,7 +496,7 @@ PrefabInstance:
     - target: {fileID: 6727397922019148949, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6727397922019148949, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
@@ -521,7 +516,7 @@ PrefabInstance:
     - target: {fileID: 6727397922019148949, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}
       propertyPath: m_text
-      value: Hue
+      value: AmpOffset
       objectReference: {fileID: 0}
     - target: {fileID: 7716508003244229186, guid: 5c719081814bb4b1195d1886bab3a09d,
         type: 3}

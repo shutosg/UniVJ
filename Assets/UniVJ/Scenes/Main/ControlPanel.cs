@@ -35,7 +35,7 @@ public class ControlPanel : MonoBehaviour
             var subSceneController = await _layerManager.LoadFootage(data, selectedLayer, onUpdateTime);
             _rendererView.UpdateLayerView(selectedLayer, showSeekBar: isVideo, speed: 1f, attack: 0f);
             _rendererView.SetSeekSlider(selectedLayer, 0);
-            // シーンのコントローラをinstantiateして配置
+            // シーンのコントローラを配置
             if (subSceneController != null) subSceneController.transform.SetParent(_subSceneControllerParent, worldPositionStays: false);
             // selectedLayer が変わったら表示も変える
             _rendererView.ObservableSelectedLayer.Subscribe(layer => _layerManager.ShowSubSceneController(layer).Forget());
@@ -55,10 +55,7 @@ public class ControlPanel : MonoBehaviour
         _layerManager.SendSpeed(layer, speed);
     }
 
-    public void SendVariable(SubSceneVariable variable, float value)
-    {
-        _layerManager.SendVariable(_rendererView.SelectedLayer, variable, value);
-    }
+    public void SendVariable(SubSceneVariable variable, float value) => _layerManager.SendVariable(_rendererView.SelectedLayer, variable, value);
 
     public void SetBlendingFactor(Layers layer, float value) => _rendererView.SetBlendingSlider(layer, value);
 

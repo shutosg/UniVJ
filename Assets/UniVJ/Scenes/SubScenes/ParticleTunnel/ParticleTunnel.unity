@@ -276,12 +276,18 @@ VisualEffect:
       - m_Value: 0
         m_Name: TurbulencePower
         m_Overridden: 1
+      - m_Value: 0
+        m_Name: AmpOffset
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 6.4222345, y: 1.5803404, z: 0.3698669, w: 1}
+        m_Name: Highlight
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -750,7 +756,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneCamera: {fileID: 1281590524}
-  _cameraData: {fileID: 0}
   _sceneLights: []
   _postEffectShader: {fileID: 4800000, guid: a185389042bd84d99a902826de1c1daf, type: 3}
   _vfxs:
@@ -829,6 +834,9 @@ VisualEffect:
         m_Overridden: 1
       - m_Value: 0
         m_Name: TurbulencePower
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: AmpOffset
         m_Overridden: 1
     m_Vector2f:
       m_Array: []
@@ -990,6 +998,9 @@ VisualEffect:
         m_Overridden: 1
       - m_Value: 0
         m_Name: TurbulencePower
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: AmpOffset
         m_Overridden: 1
     m_Vector2f:
       m_Array: []

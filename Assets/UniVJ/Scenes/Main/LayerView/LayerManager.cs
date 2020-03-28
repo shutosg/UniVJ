@@ -122,8 +122,10 @@ public class LayerManager
     /// <param name="value"></param>
     public void SendVariable(Layers layer, SubSceneVariable variable, float value)
     {
-        if (!_loadedSubSceneManagers.ContainsKey((layer))) return;
+        if (!_loadedSubSceneManagers.ContainsKey(layer)) return;
         _loadedSubSceneManagers[layer].OnReceiveVariable(variable, value);
+        if (!_loadedSubSceneControllers.ContainsKey(layer)) return;
+        _loadedSubSceneControllers[layer].SetVariableSlider(variable - SubSceneVariable.Variable1, value);
     }
     #endregion
 

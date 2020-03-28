@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
@@ -9,6 +10,7 @@ using TMPro;
 public class SubSceneController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _footagePath;
+    [SerializeField] private Fader[] _sliderVariables;
     private SubSceneManager _subSceneManager;
 
     /// <summary>
@@ -21,6 +23,7 @@ public class SubSceneController : MonoBehaviour
     {
         _subSceneManager = subSceneManager;
         _footagePath.text = footagePath;
+        _sliderVariables.ForEach((s, i) => s.onValueChanged.AddListener(v => subSceneManager.OnReceiveVariable(SubSceneVariable.Variable1 + i, v)));
         return initialize();
     }
 
@@ -39,8 +42,9 @@ public class SubSceneController : MonoBehaviour
         return false;
     }
 
+    public void SetVariableSlider(int index, float value) => _sliderVariables[index].SetValue(value);
+
     protected virtual bool initialize() => true;
 
     public void SetActive(bool isActive) => gameObject.SetActive(isActive);
-
 }
