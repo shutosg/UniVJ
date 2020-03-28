@@ -29,6 +29,9 @@ public class ParticleTunnelManager : SubSceneManager
         }
     }
 
+    protected override float getVariable1() => _vfxs[0].GetFloat(_sizeId);
+
+
     protected override void onReceiveVariable2(float value)
     {
         foreach (var vfx in _vfxs)
@@ -37,6 +40,8 @@ public class ParticleTunnelManager : SubSceneManager
         }
     }
 
+    protected override float getVariable2() => _vfxs[0].GetFloat(_ampOffsetId);
+
     protected override void onReceiveVariable3(float value)
     {
         foreach (var vfx in _vfxs)
@@ -44,6 +49,8 @@ public class ParticleTunnelManager : SubSceneManager
             vfx.SetFloat(_turbulencePowerId, Mathf.Lerp(-20, 20, value));
         }
     }
+
+    protected override float getVariable3() => MathUtility.Map(_vfxs[0].GetFloat(_turbulencePowerId), -20, 20, 0, 1);
 
     public override void OnReceiveSpeed(float value)
     {

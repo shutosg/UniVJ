@@ -8,11 +8,4 @@ using UniRx;
 using UniRx.Async;
 using UnityEngine.Serialization;
 
-public class ParticleTunnelController : SubSceneController
-{
-    protected override bool initialize()
-    {
-        if (!tryCastSubSceneManager<ParticleTunnelManager>(out var particleTunnelManager)) return false;
-        return true;
-    }
-}
+public class ParticleTunnelController : SubSceneController { }

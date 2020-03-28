@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UniRx;
 
 /// <summary>
 /// サブシーンのコントローラクラス。シーンマネージャを操作するUIを提供する。
@@ -10,7 +10,8 @@ using TMPro;
 public class SubSceneController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _footagePath;
-    [SerializeField] private Fader[] _sliderVariables;
+    [SerializeField] protected SubSceneVariablesView _variablesView;
+    [SerializeField] private ColorAdjustmentsView _colorAdjustmentsView;
     private SubSceneManager _subSceneManager;
 
     /// <summary>
@@ -23,7 +24,16 @@ public class SubSceneController : MonoBehaviour
     {
         _subSceneManager = subSceneManager;
         _footagePath.text = footagePath;
-        _sliderVariables.ForEach((s, i) => s.onValueChanged.AddListener(v => subSceneManager.OnReceiveVariable(SubSceneVariable.Variable1 + i, v)));
+        for (var i = SubSceneVariable.Variable1; i <= SubSceneVariable.Variable4; i++)
+        {
+            _variablesView.SetValue(i - SubSceneVariable.Variable1, subSceneManager.GetVariable(i));
+        }
+        _variablesView.OnValueChangeds.ForEach((onValueChanged, i)
+            => onValueChanged.Subscribe(v => subSceneManager.OnReceiveVariable(SubSceneVariable.Variable1 + i, v)));
+        if (_colorAdjustmentsView != null)
+        {
+            _colorAdjustmentsView.Initialize(subSceneManager.ColorAdjustments);
+        }
         return initialize();
     }
 
@@ -42,7 +52,7 @@ public class SubSceneController : MonoBehaviour
         return false;
     }
 
-    public void SetVariableSlider(int index, float value) => _sliderVariables[index].SetValue(value);
+    public void SetVariableSlider(int index, float value) => _variablesView.SetValue(index, value);
 
     protected virtual bool initialize() => true;
 

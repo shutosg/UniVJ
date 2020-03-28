@@ -758,6 +758,7 @@ MonoBehaviour:
   _sceneCamera: {fileID: 1281590524}
   _sceneLights: []
   _postEffectShader: {fileID: 4800000, guid: a185389042bd84d99a902826de1c1daf, type: 3}
+  _volume: {fileID: 914392374}
   _vfxs:
   - {fileID: 512898157}
   - {fileID: 1537961399}
