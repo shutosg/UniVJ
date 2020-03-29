@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Experimental.VFX;
-using UnityEngine.Video;
-using UniRx.Async;
+﻿using UnityEngine;
 using UnityEngine.VFX;
+using UniVJ.Utility;
 
 public class ParticleTunnelManager : SubSceneManager
 {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 using Zenject;
+using UniVJ;
 
 public class ProjectInstaller : MonoInstaller
 {

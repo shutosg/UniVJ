@@ -4,23 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-/// <summary>
-/// 素材リスト
-/// </summary>
-public class FootageListView : MonoBehaviour
+namespace UniVJ
 {
-    [SerializeField] private FootageScrollView _scrollView;
-    public IObservable<FootageScrollViewData> OnSelectData => _scrollView.OnSelectData;
-
-    public void Initialize(IList<FootageScrollViewData> items)
+    /// <summary>
+    /// 素材リスト
+    /// </summary>
+    public class FootageListView : MonoBehaviour
     {
-        _scrollView.InitializeView();
-        UpdateData(items);
-        _scrollView.SelectCell(0);
-    }
+        [SerializeField] private FootageScrollView _scrollView;
+        public IObservable<FootageScrollViewData> OnSelectData => _scrollView.OnSelectData;
 
-    public void UpdateData(IList<FootageScrollViewData> data)
-    {
-        _scrollView.UpdateData(data);
+        public void Initialize(IList<FootageScrollViewData> items)
+        {
+            _scrollView.InitializeView();
+            UpdateData(items);
+            _scrollView.SelectCell(0);
+        }
+
+        public void UpdateData(IList<FootageScrollViewData> data)
+        {
+            _scrollView.UpdateData(data);
+        }
     }
 }

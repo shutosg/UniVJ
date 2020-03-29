@@ -6,45 +6,48 @@ using UnityEngine.UI;
 using UniRx;
 using TMPro;
 
-/// <summary>
-/// レイヤーのプレビューパネル
-/// </summary>
-public class LayerView : MonoBehaviour
+namespace UniVJ
 {
-    [SerializeField] private RawImage _cursor;
-    [SerializeField] private Button _selectButton;
-    [SerializeField] private RawImage _mainImage;
-    [SerializeField] private Slider _seekBar;
-    [SerializeField] private Slider _blendingFactor;
-    [SerializeField] private TextMeshProUGUI _speed;
-    [SerializeField] private TextMeshProUGUI _attack;
-
-    public IObservable<float> OnChangeBlendingSliderValue => _blendingFactor.OnValueChangedAsObservable();
-    public IObservable<float> OnChangeSeekSliderValue => _seekBar.OnValueChangedAsObservable();
-    public IObservable<Unit> OnClickButton => _selectButton.OnClickAsObservable();
-
-    public void Initialize(RenderTexture renderTexture, float blendingFactor)
+    /// <summary>
+    /// レイヤーのプレビューパネル
+    /// </summary>
+    public class LayerView : MonoBehaviour
     {
-        _mainImage.texture = renderTexture;
-        _blendingFactor.value = blendingFactor;
-        _seekBar.gameObject.SetActive(false);
-    }
+        [SerializeField] private RawImage _cursor;
+        [SerializeField] private Button _selectButton;
+        [SerializeField] private RawImage _mainImage;
+        [SerializeField] private Slider _seekBar;
+        [SerializeField] private Slider _blendingFactor;
+        [SerializeField] private TextMeshProUGUI _speed;
+        [SerializeField] private TextMeshProUGUI _attack;
 
-    public void SetBlendingSliderValue(float value) => _blendingFactor.value = value;
-    public void SetSeekSliderValue(float value) => _seekBar.value = value;
+        public IObservable<float> OnChangeBlendingSliderValue => _blendingFactor.OnValueChangedAsObservable();
+        public IObservable<float> OnChangeSeekSliderValue => _seekBar.OnValueChangedAsObservable();
+        public IObservable<Unit> OnClickButton => _selectButton.OnClickAsObservable();
 
-    public void UpdateUI(bool? isSelected = null, bool? showSeekBar = null, float? speed = null, float? attack = null)
-    {
-        if (isSelected != null)
-            _cursor.color = isSelected.Value ? Color.red : Color.gray;
+        public void Initialize(RenderTexture renderTexture, float blendingFactor)
+        {
+            _mainImage.texture = renderTexture;
+            _blendingFactor.value = blendingFactor;
+            _seekBar.gameObject.SetActive(false);
+        }
 
-        if (showSeekBar != null)
-            _seekBar.gameObject.SetActive(showSeekBar.Value);
+        public void SetBlendingSliderValue(float value) => _blendingFactor.value = value;
+        public void SetSeekSliderValue(float value) => _seekBar.value = value;
 
-        if (speed != null)
-            _speed.SetText("Speed: {0:4}", speed.Value);
+        public void UpdateUI(bool? isSelected = null, bool? showSeekBar = null, float? speed = null, float? attack = null)
+        {
+            if (isSelected != null)
+                _cursor.color = isSelected.Value ? Color.red : Color.gray;
 
-        if (attack != null)
-            _attack.SetText("Attack: {0:4}", attack.Value);
+            if (showSeekBar != null)
+                _seekBar.gameObject.SetActive(showSeekBar.Value);
+
+            if (speed != null)
+                _speed.SetText("Speed: {0:4}", speed.Value);
+
+            if (attack != null)
+                _attack.SetText("Attack: {0:4}", attack.Value);
+        }
     }
 }

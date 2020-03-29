@@ -4,7 +4,6 @@ using UnityEngine;
 using UniRx.Async;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
-using UnityEngine.SceneManagement;
 
 public class SubSceneManager : MonoBehaviour
 {

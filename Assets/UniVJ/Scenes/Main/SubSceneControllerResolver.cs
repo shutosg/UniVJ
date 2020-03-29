@@ -3,25 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SubSceneControllerResolver : ISubSceneControllerResolver
+namespace UniVJ
 {
-    public SubSceneController GetSubSceneControllerPrefab(SubSceneManager manager)
+    public class SubSceneControllerResolver : ISubSceneControllerResolver
     {
-        // manager に対応している SubSceneController へのプレハブを返す
-        var prefabName = "SubSceneControllers/" + manager.gameObject.scene.name;
-        var prefab = Resources.Load<SubSceneController>(prefabName);
-        if (prefab == null)
+        public SubSceneController GetSubSceneControllerPrefab(SubSceneManager manager)
         {
-            Debug.LogWarning($"prefab: {prefabName} が存在しません");
+            // manager に対応している SubSceneController へのプレハブを返す
+            var prefabName = "SubSceneControllers/" + manager.gameObject.scene.name;
+            var prefab = Resources.Load<SubSceneController>(prefabName);
+            if (prefab == null)
+            {
+                Debug.LogWarning($"prefab: {prefabName} が存在しません");
+            }
+            return prefab;
         }
-        return prefab;
     }
-}
 
-/// <summary>
-/// 与えられたシーンマネージャを制御可能なコントローラのプレハブを返す
-/// </summary>
-public interface ISubSceneControllerResolver
-{
-    SubSceneController GetSubSceneControllerPrefab(SubSceneManager manager);
+    /// <summary>
+    /// 与えられたシーンマネージャを制御可能なコントローラのプレハブを返す
+    /// </summary>
+    public interface ISubSceneControllerResolver
+    {
+        SubSceneController GetSubSceneControllerPrefab(SubSceneManager manager);
+    }
 }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Zenject;
 using UniRx.Async;
 using DG.Tweening;
+using UniVJ;
 
 public class ImageSceneManager : SubSceneManager
 {
