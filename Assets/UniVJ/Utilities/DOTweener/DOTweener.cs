@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -11,6 +12,7 @@ public abstract class DOTweener : MonoBehaviour
     [SerializeField] private LoopType _loopType = LoopType.Yoyo;
     [SerializeField] private Ease _ease = Ease.Linear;
     [SerializeField] protected float _duration = 1;
+    public bool IsPlaying => _playingTween?.IsPlaying() ?? false;
 
     private Tween _playingTween;
 

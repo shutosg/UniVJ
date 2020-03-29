@@ -4,6 +4,7 @@ using UnityEngine;
 using UniRx;
 using UniRx.Async;
 using Zenject;
+using DG.Tweening;
 
 /// <summary>
 /// コントロールパネル。実質アプリケーションマネージャ。UIの初期化や操作を行なう。
@@ -11,12 +12,15 @@ using Zenject;
 public class ControlPanel : MonoBehaviour
 {
     [SerializeField] private Transform _subSceneControllerParent;
+    [SerializeField] private DOValue _flashTween;
     [Inject] private MainRendererView _rendererView;
     [Inject] private FootageListView _footageListView;
     [Inject] private LayerManager _layerManager;
     [Inject] private FootageManager _footageManager;
 
     [SerializeField] private VideoSceneController prefab;
+
+    private Layers _flashingLayer = Layers.Layer1;
 
     public void Initialize()
     {
@@ -60,4 +64,11 @@ public class ControlPanel : MonoBehaviour
     public void SetBlendingFactor(Layers layer, float value) => _rendererView.SetBlendingSlider(layer, value);
 
     public void UnloadSelectedScene() => _layerManager.UnloadSceneAsync(_rendererView.SelectedLayer).Forget();
+
+    public void FlashSelectedScene()
+    {
+        _flashingLayer = _rendererView.SelectedLayer;
+        _flashTween.OnUpdate = value => _rendererView.SetBlendingSlider(_flashingLayer, value);
+        _flashTween.Play();
+    }
 }

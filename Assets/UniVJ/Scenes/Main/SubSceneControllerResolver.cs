@@ -18,6 +18,9 @@ public class SubSceneControllerResolver : ISubSceneControllerResolver
     }
 }
 
+/// <summary>
+/// 与えられたシーンマネージャを制御可能なコントローラのプレハブを返す
+/// </summary>
 public interface ISubSceneControllerResolver
 {
     SubSceneController GetSubSceneControllerPrefab(SubSceneManager manager);

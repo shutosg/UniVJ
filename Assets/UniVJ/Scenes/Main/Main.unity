@@ -224,7 +224,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5456746425873016297}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5456746425873016300}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee0669d06f4604b5daf016effc0d01b6, type: 3}
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _events:
-    m_keys: 3100000032000000330000003400000008000000
+    m_keys: 310000003200000033000000340000000800000035000000360000003700000020000000
     m_values:
     - m_PersistentCalls:
         m_Calls:
@@ -1033,6 +1033,58 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5456746425873016298}
           m_MethodName: UnLoadSelectedScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5456746425873016299}
+          m_MethodName: SetSelectedLayer5
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5456746425873016299}
+          m_MethodName: SetSelectedLayer6
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5456746425873016299}
+          m_MethodName: SetSelectedLayer7
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5456746425873016298}
+          m_MethodName: FlashSelectedScene
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3629,6 +3681,11 @@ PrefabInstance:
       propertyPath: m_ScreenMatchMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5456746425910950173, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+        type: 3}
+      propertyPath: _flashTween
+      value: 
+      objectReference: {fileID: 5456746425873016301}
     - target: {fileID: 5456746426047999851, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4988,7 +5045,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5456746425873016297}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5456746425873016300}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61a578dce03924fa9842bbaa039707ee, type: 3}
@@ -5006,3 +5063,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41232f674511142afab1fb93bc03bfe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5456746425873016300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5456746425910950150, guid: 627fd3cdbfe1d4ffd80415372e9f848d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5456746425873016297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5456746425873016301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456746425873016300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0420bc9029f4e56ac774e49851534e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _isLoop: 0
+  _loopNum: -1
+  _loopType: 0
+  _ease: 18
+  _duration: 0.25
+  _startValue: 1
+  _endValue: 0
