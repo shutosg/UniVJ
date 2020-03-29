@@ -36,7 +36,7 @@ public class VideoSceneManager : SubSceneManager
 
     /// <summary></summary>
     private readonly float[] _previousSpeeds = new float[SpeedChangeWaitFrame];
-    private float _currentSpeed;
+    private float _currentSpeed = 1f;
     private FrameInfo _info = new FrameInfo();
     public event Action<FrameInfo> OnUpdate;
     public double Length => _frontVideo.length;
