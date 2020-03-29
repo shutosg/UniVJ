@@ -59,8 +59,8 @@ public class FootageScrollViewCell : FancyGridViewCell<FootageScrollViewData, Fo
                 var path = data.FootagePath;
                 if (_thumbnailMaker.HasThumbnail(path))
                 {
-                    load(_thumbnailMaker.GetThumbnailPath(data.FootagePath).Remove(0, FootageManager.FootagePath.Length),
-                        cancellationTokenSource.Token).Forget();
+                    var thumbnailPath = _thumbnailMaker.GetThumbnailPath(data.FootagePath).Remove(0, FootageManager.FootagePath.Length);
+                    load(thumbnailPath, cancellationTokenSource.Token).Forget();
                 }
                 else
                 {
