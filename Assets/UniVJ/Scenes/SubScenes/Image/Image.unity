@@ -352,6 +352,9 @@ MonoBehaviour:
   _volume: {fileID: 1874095034}
   _frontImage: {fileID: 858318630}
   _backImage: {fileID: 471796225}
+  _tweeners:
+  - {fileID: 858318633}
+  - {fileID: 858318634}
   aspectFitters:
   - {fileID: 858318632}
   - {fileID: 471796224}
@@ -383,7 +386,7 @@ RectTransform:
   m_GameObject: {fileID: 471796222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 530441577}
   m_RootOrder: 0
@@ -552,6 +555,8 @@ GameObject:
   - component: {fileID: 858318631}
   - component: {fileID: 858318630}
   - component: {fileID: 858318632}
+  - component: {fileID: 858318634}
+  - component: {fileID: 858318633}
   m_Layer: 0
   m_Name: RawImageFront
   m_TagString: Untagged
@@ -625,6 +630,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 1.7777779
+--- !u!114 &858318633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858318628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b78d80438b3402a934abdcca0a232f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _isLoop: 1
+  _loopNum: -1
+  _loopType: 1
+  _ease: 4
+  _duration: 1
+  _startValue: 0.5
+  _endValue: 2
+--- !u!114 &858318634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858318628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 678064205e19d4863aaed1874e00bea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _isLoop: 1
+  _loopNum: -1
+  _loopType: 0
+  _ease: 1
+  _duration: 1
+  _startValue: {x: 0, y: 0, z: 0}
+  _endValue: {x: 0, y: 0, z: -360}
 --- !u!1 &979181311
 GameObject:
   m_ObjectHideFlags: 0

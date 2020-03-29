@@ -10,9 +10,19 @@ using UnityEngine.Serialization;
 
 public class ImageSceneController : SubSceneController
 {
+    [SerializeField] private Toggle _backgroundToggle;
+    private ImageSceneManager _imageSceneManager;
+
     protected override bool initialize()
     {
-        if (!tryCastSubSceneManager<ImageSceneManager>(out var imageSceneManager)) return false;
+        if (!tryCastSubSceneManager<ImageSceneManager>(out _imageSceneManager)) return false;
+        _backgroundToggle.OnValueChangedAsObservable().Subscribe(isOn =>
+        {
+            var color = isOn ? Color.white : Color.black;
+            _imageSceneManager.SetBackground(isOn, color);
+        });
         return true;
     }
+
+    // protected override 
 }
