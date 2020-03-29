@@ -14,8 +14,9 @@ using UniRx.Async;
 /// </summary>
 public class FootageManager
 {
-    public static readonly string FootagePath = "/Users/shuto/UniVJ/Footages/";
-    public static readonly string ThumbnailPath = "/Users/shuto/UniVJ/Footages/.thumbnails/";
+    public static readonly string UniVJDocumentsPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/UniVJ";
+    public static readonly string FootagePath = $"{UniVJDocumentsPath}/Footages/";
+    public static readonly string ThumbnailPath = $"{UniVJDocumentsPath}/Footages/.thumbnails/";
     private static readonly string[] TargetExtensions = new string[] {".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif"};
     private static readonly Dictionary<string, Texture2D> imageCache = new Dictionary<string, Texture2D>();
 
