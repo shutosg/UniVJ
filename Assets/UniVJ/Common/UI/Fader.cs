@@ -10,6 +10,8 @@ public class Fader : VolumeParameterValueView<float>
     [SerializeField] private Slider _slider;
     [SerializeField] private TextMeshProUGUI _valueText;
     public override IObservable<float> OnValueChanged => _slider.OnValueChangedAsObservable();
+    public float MaxValue => _slider.maxValue;
+    public float MinValue => _slider.minValue;
 
     public float minValue
     {
