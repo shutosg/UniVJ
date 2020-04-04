@@ -5,10 +5,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class KeyInputBinder : MonoBehaviour
+public class KeyInputBinder : MonoBehaviour, IKeyInputBinder
 {
     [SerializeField] private EventDictionary _events;
     private KeyValuePair<KeyCode, UnityEvent>[] _keyValuePairs;
+    public bool IsActive { get; set; } = true;
 
     void Start()
     {
@@ -17,6 +18,7 @@ public class KeyInputBinder : MonoBehaviour
 
     void Update()
     {
+        if (!IsActive) return;
         foreach (var keyValuePair in _keyValuePairs)
         {
             if (Input.GetKey(keyValuePair.Key))
@@ -28,3 +30,8 @@ public class KeyInputBinder : MonoBehaviour
 }
 
 [Serializable] public class EventDictionary : SerializableDictionary<KeyCode, UnityEvent> { }
+
+public interface IKeyInputBinder
+{
+    bool IsActive { get; set; }
+}

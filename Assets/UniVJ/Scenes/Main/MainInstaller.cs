@@ -9,6 +9,7 @@ namespace UniVJ
         [SerializeField] private Shader _mainRendererShader;
         [SerializeField] private MainRendererView _rendererView;
         [SerializeField] private FootageListView _footageListView;
+        [SerializeField] private KeyInputBinder _keyInputBinder;
 
         public override void InstallBindings()
         {
@@ -19,6 +20,7 @@ namespace UniVJ
             Container.Bind<LayerManager>().AsSingle().NonLazy();
             Container.Bind<ThumbnailMaker>().AsSingle().NonLazy();
             Container.Bind<ISubSceneControllerResolver>().To<SubSceneControllerResolver>().AsSingle().NonLazy();
+            Container.Bind<IKeyInputBinder>().FromInstance(_keyInputBinder).AsSingle().NonLazy();
         }
     }
 }
