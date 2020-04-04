@@ -14,9 +14,11 @@ public static class IEnumerableExtension
     /// <param name="selector">IEnumerable の要素を加工する関数</param>
     /// <typeparam name="T"></typeparam>
     public static void DebugLog<T>(this IEnumerable<T> self, string prefix = null, string suffix = null, Func<T, string> selector = null)
-    {
-        Debug.Log($"{prefix}[{string.Join(", ", self.Select(obj => selector != null ? selector(obj) : obj.ToString()))}]{suffix}");
-    }
+        => Debug.Log(self.ToDebugString(prefix, suffix, selector));
+
+
+    public static string ToDebugString<T>(this IEnumerable<T> self, string prefix = null, string suffix = null, Func<T, string> selector = null)
+        => $"{prefix}[{string.Join(", ", self.Select(obj => selector != null ? selector(obj) : obj.ToString()))}]{suffix}";
 
     /// <summary>
     /// 2つのリストから1つづつ取り出して処理を実行する(index付き)

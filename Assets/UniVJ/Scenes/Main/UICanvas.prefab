@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 5456746425910950168}
   - component: {fileID: 5456746425910950173}
   - component: {fileID: 2036206022479710446}
+  - component: {fileID: 6926265794199661148}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -579,6 +580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _subSceneControllerParent: {fileID: 1997393718629754552}
+  _flashTween: {fileID: 6926265794199661148}
   prefab: {fileID: 7613820472092874707, guid: 5a504a981cff74fb9be33da5b598d546, type: 3}
 --- !u!114 &2036206022479710446
 MonoBehaviour:
@@ -593,6 +595,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controlPanel: {fileID: 5456746425910950173}
+--- !u!114 &6926265794199661148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456746425910950150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0420bc9029f4e56ac774e49851534e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 0
+  _isLoop: 0
+  _loopNum: -1
+  _loopType: 0
+  _ease: 18
+  _duration: 0.25
+  _startValue: 1
+  _endValue: 0
 --- !u!1 &5456746426713392764
 GameObject:
   m_ObjectHideFlags: 0

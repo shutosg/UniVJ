@@ -4,10 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UniRx.Async;
+using UnityEditor;
 
 namespace UniVJ
 {
@@ -19,22 +21,20 @@ namespace UniVJ
         public static readonly string UniVJDocumentsPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}/UniVJ";
         public static readonly string FootagePath = $"{UniVJDocumentsPath}/Footages/";
         public static readonly string ThumbnailPath = $"{UniVJDocumentsPath}/Footages/.thumbnails/";
+        public static readonly string FontsPath = "Assets/UniVJ/Fonts";
         private static readonly string[] TargetExtensions = new string[] {".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif"};
         private static readonly Dictionary<string, Texture2D> imageCache = new Dictionary<string, Texture2D>();
-
 
         /// <summary>
         /// 素材リストに表示するためのすべての素材データを返す
         /// </summary>
         public IEnumerable<FootageScrollViewData> GetAllFootageData()
-        {
-            return GetAllScenePathes().Select(path => (path: path, name: Path.GetFileNameWithoutExtension(path)))
+            => GetAllScenePathes().Select(path => (path: path, name: Path.GetFileNameWithoutExtension(path)))
                 .Where(x => x.name != "Main")
                 .Where(x => x.name != "Video")
                 .Where(x => x.name != "Image")
                 .Select(x => new FootageScrollViewData(x.name, x.path))
                 .Concat(GetFootagePathData());
-        }
 
         /// <summary>
         /// 素材ディレクトリに存在する対象のメディアファイルの素材データを返す
@@ -51,6 +51,24 @@ namespace UniVJ
                     if (x.extension == ".mp4" || x.extension == ".mov") type = FootageType.Video;
                     return new FootageScrollViewData(x.relativePath, x.relativePath, x.relativePath.Substring(FootagePath.Length), type);
                 });
+
+        /// <summary>
+        /// TMPro のフォントアセットを読み込む
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<TMP_FontAsset> GetFonts()
+            => AssetDatabase.FindAssets("t:TMP_FontAsset", new[] { FontsPath })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(AssetDatabase.LoadAssetAtPath<TMP_FontAsset>);
+
+        /// <summary>
+        ///　Font Material を読み込む 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Material> GetFontMaterials()
+            => AssetDatabase.FindAssets("t:Material", new[] { FontsPath })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(AssetDatabase.LoadAssetAtPath<Material>);
 
         /// <summary>
         /// ビルドに含まれるすべてのシーンパスを返す

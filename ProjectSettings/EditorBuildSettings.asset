@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UniVJ/Scenes/SubScenes/ParticleWave/ParticleWave.unity
     guid: b5525508c26ff4712a149ca7b138df6b
+  - enabled: 1
+    path: Assets/UniVJ/Scenes/SubScenes/KineticTypo/KineticTypo.unity
+    guid: 3162c2f4f04db4f248199d3febee3996
   m_configObjects: {}

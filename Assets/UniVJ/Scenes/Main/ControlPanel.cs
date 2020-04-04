@@ -18,6 +18,7 @@ namespace UniVJ
         [Inject] private FootageListView _footageListView;
         [Inject] private LayerManager _layerManager;
         [Inject] private FootageManager _footageManager;
+        [Inject] private IKeyInputBinder _keyBinder;
 
         [SerializeField] private VideoSceneController prefab;
 
@@ -41,7 +42,16 @@ namespace UniVJ
                 _rendererView.UpdateLayerView(selectedLayer, showSeekBar: isVideo, speed: 1f, attack: 0f);
                 _rendererView.SetSeekSlider(selectedLayer, 0);
                 // シーンのコントローラを配置
-                if (subSceneController != null) subSceneController.transform.SetParent(_subSceneControllerParent, worldPositionStays: false);
+                if (subSceneController != null)
+                {
+                    subSceneController.transform.SetParent(_subSceneControllerParent, worldPositionStays: false);
+                    // subSceneController が InputField を持っている場合、入力中はショートカットを効かないようにする
+                    if (subSceneController is IHasInputField inputSubScene)
+                    {
+                        inputSubScene.OnStartInput.Subscribe(_ => _keyBinder.IsActive = false);
+                        inputSubScene.OnFinishInput.Subscribe(_ => _keyBinder.IsActive = true);
+                    }
+                }
                 // selectedLayer が変わったら表示も変える
                 _rendererView.ObservableSelectedLayer.Subscribe(layer => _layerManager.ShowSubSceneController(layer).Forget());
             });

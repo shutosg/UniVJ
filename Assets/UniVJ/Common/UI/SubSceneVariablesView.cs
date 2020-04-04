@@ -16,6 +16,7 @@ public class SubSceneVariablesView : MonoBehaviour
             Debug.LogError($"指定されたindex {index} は _faders(Length: {_faders.Length}) のindex範囲外です");
             return;
         }
-        _faders[index].SetValue(value);
+        var fader = _faders[index];
+        fader.SetValue(Mathf.Lerp(fader.minValue, fader.maxValue, value));
     }
 }
