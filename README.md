@@ -18,3 +18,15 @@ VJ Software with standard features and flexible extensibility which is made with
 * 現状Macのみ対応 / currently support only Mac
   * いずれWindows対応予定 / someday will support Win
 * Unity 2019.3 or later
+
+## 外部依存 / External dependencies
+* [DOTween](http://dotween.demigiant.com/)
+* [FancyScrollView](https://github.com/setchi/FancyScrollView)
+* [HSVPicker](https://github.com/judah4/HSV-Color-Picker-Unity)
+* [Lasp](https://github.com/keijiro/Lasp)
+* [LaspVFX](https://github.com/keijiro/LaspVfx)
+* [MidiJack](https://github.com/keijiro/MidiJack)
+* [SerializableDictionary](https://github.com/azixMcAze/Unity-SerializableDictionary)
+* [UniRx](https://github.com/neuecc/UniRx)
+* [UniTask](https://github.com/Cysharp/UniTask)
+* [Extenject](https://github.com/svermeulen/Extenject)
