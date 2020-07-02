@@ -22,14 +22,14 @@ namespace UniVJ
         public static readonly string FootagePath = $"{UniVJDocumentsPath}/Footages/";
         public static readonly string ThumbnailPath = $"{UniVJDocumentsPath}/Footages/.thumbnails/";
         public static readonly string FontsPath = "Assets/UniVJ/Fonts";
-        private static readonly string[] TargetExtensions = new string[] {".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif"};
+        private static readonly string[] TargetExtensions = new string[] { ".mp4", ".mov", ".png", ".jpg", ".jpeg", ".gif" };
         private static readonly Dictionary<string, Texture2D> imageCache = new Dictionary<string, Texture2D>();
 
         /// <summary>
         /// 素材リストに表示するためのすべての素材データを返す
         /// </summary>
         public IEnumerable<FootageScrollViewData> GetAllFootageData()
-            => GetAllScenePathes().Select(path => (path: path, name: Path.GetFileNameWithoutExtension(path)))
+            => GetAllScenePaths().Select(path => (path: path, name: Path.GetFileNameWithoutExtension(path)))
                 .Where(x => x.name != "Main")
                 .Where(x => x.name != "Video")
                 .Where(x => x.name != "Image")
@@ -73,8 +73,9 @@ namespace UniVJ
         /// <summary>
         /// ビルドに含まれるすべてのシーンパスを返す
         /// </summary>
-        public IEnumerable<string> GetAllScenePathes() => Enumerable.Range(0, SceneManager.sceneCountInBuildSettings)
-            .Select(SceneUtility.GetScenePathByBuildIndex);
+        public IEnumerable<string> GetAllScenePaths()
+            => Enumerable.Range(0, SceneManager.sceneCountInBuildSettings)
+                .Select(SceneUtility.GetScenePathByBuildIndex);
 
         /// <summary>
         /// 素材フォルダにある画像をテクスチャとして読み込む
